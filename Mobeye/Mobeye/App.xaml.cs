@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Mobeye.API;
 
 namespace Mobeye
 {
@@ -9,7 +10,7 @@ namespace Mobeye
         public App()
         {
             InitializeComponent();
-
+            APIHelper.InitaliazeClient();
             MainPage = new NavigationPage(new MainPage());
 
         }
