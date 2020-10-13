@@ -6,7 +6,7 @@ namespace Mobeye.Logic
 {
     public class LanguageHandler
     {
-        private Language Language { get; set; }
+        public Language Language { get; set; }
 
         public void ChangeLanguage(Language lang)
         {
