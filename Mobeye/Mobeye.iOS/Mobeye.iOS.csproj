@@ -135,4 +135,7 @@
       <Name>Mobeye</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mobeyelogo.png" />
+  </ItemGroup>
 </Project>
