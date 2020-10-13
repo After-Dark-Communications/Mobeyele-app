@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobeye.iOS", "Mobeye.iOS\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye", "Mobeye\Mobeye.csproj", "{25F91F3D-BA18-48FB-ADC8-9917EDBF70D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobeye.API", "Mobeye.API\Mobeye.API.csproj", "{3323240D-181A-4C97-9F9C-FEDD1148D57F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.API", "Mobeye.API\Mobeye.API.csproj", "{3323240D-181A-4C97-9F9C-FEDD1148D57F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobeye.Dependency", "MobEye.Dependency\Mobeye.Dependency.csproj", "{DFC70201-8159-4127-938F-D76602109CF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.Dependency", "MobEye.Dependency\Mobeye.Dependency.csproj", "{DFC70201-8159-4127-938F-D76602109CF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.Logic", "Mobeye.Logic\Mobeye.Logic.csproj", "{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,18 @@ Global
 		{DFC70201-8159-4127-938F-D76602109CF6}.Release|iPhone.Build.0 = Release|Any CPU
 		{DFC70201-8159-4127-938F-D76602109CF6}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DFC70201-8159-4127-938F-D76602109CF6}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|iPhone.Build.0 = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2FF06BDD-5F0D-4F75-9BA2-D6AFF1F76823}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
