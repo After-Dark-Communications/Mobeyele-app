@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Mobeye.Dependency; 
 
 namespace Mobeye.API
 {
@@ -8,17 +10,17 @@ namespace Mobeye.API
         public string Message { get; set; }
 
 
-        public void ReceiveNotification()
+        public NotificationModel ReceiveNotification()
         {
-
+            return null;
         }
-        public void ConvertJsonToNotification()
+        public NotificationModel ConvertJsonToNotification()
         {
-
+            return null;
         }
-        public void ConfirmmedNotification()
+        public void ConfirmedNotification(bool confirmed, NotificationModel notification)
         {
-
+            
         }
     }
 }
