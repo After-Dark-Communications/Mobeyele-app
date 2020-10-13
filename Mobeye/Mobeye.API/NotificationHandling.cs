@@ -8,13 +8,11 @@ namespace Mobeye.API
     {
         public int Id { get; set; }
         public string Message { get; set; }
-
-
         public NotificationModel ReceiveNotification()
         {
             return null;
         }
-        public NotificationModel ConvertJsonToNotification()
+        public NotificationModel ConvertJsonToNotification(string json)
         {
             return null;
         }

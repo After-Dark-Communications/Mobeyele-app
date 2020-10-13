@@ -9,7 +9,6 @@ namespace Mobeye.API
         public string GottenCode { get; set; }
         public string GottenTel { get; set; }
 
-
         public bool SendTelConfirmRequest(string tel)
         {
             return false;
