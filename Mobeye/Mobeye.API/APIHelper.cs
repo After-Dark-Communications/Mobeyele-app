@@ -14,6 +14,7 @@ namespace Mobeye.API
         public static void InitaliazeClient()
         {
             API = new HttpClient();
+            API.BaseAddress = new Uri("https://rest.mymobeye.com");
             API.DefaultRequestHeaders.Accept.Clear();
             API.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

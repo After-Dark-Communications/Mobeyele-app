@@ -9,15 +9,15 @@ namespace Mobeye.API
         public string GottenCode { get; set; }
         public string GottenTel { get; set; }
 
-        public bool SendTelConfirmRequest(string Tel)
+        public bool SendTelConfirmRequest(string tel)
         {
             return false;
         }
-        public bool SendCodeConfirmRequest(string Code)
+        public bool SendCodeConfirmRequest(string code)
         {
             return false;
         }
-        public bool PortalOwnerConfirmationRequest(string Username, string Password)
+        public bool PortalOwnerConfirmationRequest(string username, string password)
         {
             return false;
         }

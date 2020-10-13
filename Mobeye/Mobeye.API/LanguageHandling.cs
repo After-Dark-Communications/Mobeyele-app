@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobeye.Dependency;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace Mobeye.API
         public Language CurrentLanguage { get; set; }
         public void ChangeLanguage()
         {
-
+           
         }
     }
 }
