@@ -8,12 +8,12 @@ namespace Mobeye.Logic
 		private int ID { get; set; }
 		private string Message { get; set; }
 
-		public void PushToDevice(NotificationModel notification)
+		public void PushToPhone(NotificationModel notification)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool ConfirmNotification(NotificationModel notification)
+		public bool ConfirmedNotification(NotificationModel notification)
 		{
 			throw new NotImplementedException();
 		}
