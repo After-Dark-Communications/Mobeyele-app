@@ -6,7 +6,7 @@
         <StackLayout>
             <Image Source="mobeyelogo.png" Margin="0,10,0,25"/>
 
-            <Entry Placeholder="Access Code" Margin="20,0" MaxLength="4" Keyboard="Numeric"/>
+            <Entry Placeholder="Access Code" Margin="20,0" MaxLength="5" Keyboard="Numeric" x:Name="EnteredCode" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
