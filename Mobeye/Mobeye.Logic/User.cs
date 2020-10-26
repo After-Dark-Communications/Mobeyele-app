@@ -12,8 +12,11 @@ namespace Mobeye.Logic
             //return UserModel
             throw new NotImplementedException();
         }
-        public bool LogIn(string accessCode)
+        public UserModel LogIn(string accessCode)
         {
+            //pass accessCode to API
+            //API returns UserModel or null
+            //return UserModel
             throw new NotImplementedException();
         }
         /*public bool LogIn(string authorizationCode)
