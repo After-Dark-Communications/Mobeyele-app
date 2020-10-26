@@ -13,20 +13,18 @@ namespace Mobeye.API
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> GetCodeConfirmRequest(string code)
+
+        public async Task<string> GetCodeConfirmRequest(string code)
         {
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("")) //API Call to Mobeye
             {
                 if(response.IsSuccessStatusCode)
                 {
                     string receivedcode = await response.Content.ReadAsStringAsync();
-                    if(code == receivedcode)
-                    {
-                        return true;
-                    }
+                    return receivedcode;
                 }
             }
-            return false;
+            return null;
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {

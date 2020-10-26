@@ -1,15 +1,18 @@
 ﻿using Mobeye.Dependency;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mobeye.API
 {
     public class ExternalDeviceFunctions
     {
-        public bool ExecuteCommand(DeviceModel device)
+        public async Task<bool> ExecuteCommand(DeviceModel device)
         {
-            return false;
+            throw new NotImplementedException();
         }
     }
 }
