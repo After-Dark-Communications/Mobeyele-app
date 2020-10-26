@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mobeye.API
 {
     public class UserConfirmation
     {
+        
         public string GottenCode { get; set; }
         public string GottenTel { get; set; }
 
@@ -13,7 +15,7 @@ namespace Mobeye.API
         {
             return false;
         }
-        public bool SendCodeConfirmRequest(string code)
+        public async Task<bool> SendCodeConfirmRequest(string code)
         {
             return false;
         }
