@@ -30,6 +30,7 @@ namespace Mobeye
         public async void RefreshDoors(object sender, EventArgs e)
         {
             List<string> Doors = GetAccessableDoors();
+            DoorContainer.Children.Clear();
             for (int i = 0; i < Doors.Count; i++)
             {
                 DoorContainer.Children.Add(CreateNewDoorGrid(Doors[i]));
