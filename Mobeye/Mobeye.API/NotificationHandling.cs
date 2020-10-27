@@ -10,7 +10,6 @@ namespace Mobeye.API
     {
         public int Id { get; set; }
         public string Message { get; set; }
-
         public async Task<NotificationModel> ReceiveNotification(string path)
         {
             NotificationModel notification = null;
