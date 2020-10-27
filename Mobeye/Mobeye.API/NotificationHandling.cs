@@ -1,6 +1,8 @@
-﻿using System;
-using System.IO;
-using Mobeye.Dependency; 
+﻿using Mobeye.Dependency;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Mobeye.API
 {
@@ -8,19 +10,23 @@ namespace Mobeye.API
     {
         public int Id { get; set; }
         public string Message { get; set; }
-
-
-        public NotificationModel ReceiveNotification()
+        public async Task<NotificationModel> ReceiveNotification(string path)
         {
-            return null;
+            NotificationModel notification = null;
+            HttpResponseMessage response = await APIHelper.API.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                notification = await response.Content.ReadAsAsync<NotificationModel>();
+            }
+            return notification;
         }
-        public NotificationModel ConvertJsonToNotification()
+        public void ConvertJsonToNotification(string json)
         {
-            return null;
+
         }
-        public void ConfirmedNotification(bool confirmed, NotificationModel notification)
+        public void ConfirmedNotification(bool confirmed)
         {
-            
+
         }
     }
 }
