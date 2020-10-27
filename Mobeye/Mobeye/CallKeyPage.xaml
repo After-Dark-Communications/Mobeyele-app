@@ -13,7 +13,14 @@
             <Button Text="Refresh List" Clicked="RefreshDoors" Margin="250,0,0,0"/>
             <ScrollView VerticalOptions="FillAndExpand" >
                 <StackLayout x:Name="DoorContainer">
-                    <!--Label objects go here -->
+                    <!--Doors go here-->
+                    <!--<Frame CornerRadius="5" Padding="20,20,20,10" BackgroundColor="#E5F5F5F5">
+                        <Grid>
+                            <Label FontAttributes="Bold" FontSize="18" TextColor="#080808">Name:</Label>
+                            <Label FontSize="18" Margin="60,0,0,0" TextColor="#000">Door1</Label>
+                            <Button Margin="0,30,0,0" Text="OPEN"/>
+                        </Grid>
+                    </Frame>-->
                 </StackLayout>
             </ScrollView>
 

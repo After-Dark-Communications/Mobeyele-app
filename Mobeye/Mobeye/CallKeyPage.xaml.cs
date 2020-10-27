@@ -14,17 +14,17 @@ namespace Mobeye
     {
         public CallKeyPage()
         {
-            
+
             InitializeComponent();
 
             this.BindingContext = GetAccessableDoors();
         }
         //either per timeframe, when the user logs in or when the app is re-opened
-       //do we have that in the questions doc?
+        //do we have that in the questions doc?
         public async void LoadAccessableDoors()
         {
             //create new container for every door.
-            
+
         }
 
         public async void RefreshDoors(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace Mobeye
             DoorContainer.Children.Clear();
             for (int i = 0; i < Doors.Count; i++)
             {
-                DoorContainer.Children.Add(CreateNewDoorGrid(Doors[i]));
+                DoorContainer.Children.Add(CreateNewDoorItem(Doors[i]));
             }
         }
 
@@ -42,23 +42,28 @@ namespace Mobeye
             //do we know the location of a call key?
         }
 
-        private Grid CreateNewDoorGrid(string name)
+        private Frame CreateNewDoorItem(string name)
         {
-            Grid temp = new Grid
+            Frame frame = new Frame()
             {
-                BackgroundColor = Color.FromHex("#7FFFFFFF"),
-            Padding = 10,
+                Padding = new Thickness(20, 20, 20, 10),
+                BackgroundColor = Color.FromHex("#E5F5F5F5"),
+                CornerRadius = 5,
             };
+
+            Grid grid = new Grid();
             Label nameLabel = new Label
-            { 
-               FontAttributes = FontAttributes.Bold,
-               FontSize = 18,
-               Text = "Name:",
+            {
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 18,
+                TextColor = Color.FromHex("#080808"),
+                Text = "Name:",
             };
             Label doorLabel = new Label
             {
                 Margin = new Thickness(60, 0, 0, 0),
                 FontSize = 18,
+                TextColor = Color.FromHex("#000000"),
                 Text = name,
             };
             Button button = new Button
@@ -66,10 +71,11 @@ namespace Mobeye
                 Margin = new Thickness(0, 30, 0, 0),
                 Text = "Open",
             };
-            temp.Children.Add(nameLabel);
-            temp.Children.Add(doorLabel);
-            temp.Children.Add(button);
-            return temp;
+            grid.Children.Add(nameLabel);
+            grid.Children.Add(doorLabel);
+            grid.Children.Add(button);
+            frame.Content = grid;
+            return frame;
         }
 
         private List<string> GetAccessableDoors()
