@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mobeye.API\Mobeye.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="PortalLogin.xaml.cs">
       <DependentUpon>PortalLogin.xaml</DependentUpon>
     </Compile>

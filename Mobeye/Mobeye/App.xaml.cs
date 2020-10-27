@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
+using Mobeye.API;
 
 namespace Mobeye
 {
