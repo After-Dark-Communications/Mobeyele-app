@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobeye.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,17 +29,21 @@ namespace Mobeye
         {
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
-                if (EnteredCode.Text == CallKeyCode())
+                User user = new User();
+                if (user.LogInWithAccessCode(EnteredCode.Text) != null)
                 {
-                    GoToCallKeyPage();
-                }
-                else if(EnteredCode.Text == ContactPersonCode())
-                {
-                    DisplayAlert("Contact Person", "You are now logged in as a contact person, you are now able to receive messages from any devices assigned to you via this app.", "OK");
+                    if (EnteredCode.Text == CallKeyCode())//TODO: replace this with proper check for permission
+                    {
+                        GoToCallKeyPage();
+                    }
+                    else if (EnteredCode.Text == ContactPersonCode())//TODO: replace this with proper check for permission
+                    {
+                        DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
+                    }
                 }
                 else
                 {
-                    DisplayAlert("Wrong code", "We could not verify this code to be correct", "Ok");
+                    DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");
                     EnteredCode.Text = "";
                 }
             }

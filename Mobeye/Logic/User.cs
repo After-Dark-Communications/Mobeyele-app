@@ -7,6 +7,10 @@ namespace Mobeye.Logic
     public class User
     {
         private readonly UserConfirmation _user;
+        public User()
+        {
+            _user = new UserConfirmation();
+        }
         public User(UserConfirmation user)
         {
             _user = user;

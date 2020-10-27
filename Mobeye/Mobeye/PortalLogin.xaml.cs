@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
+using Mobeye.Logic;
 
 namespace Mobeye
 {
@@ -30,7 +31,8 @@ namespace Mobeye
         {
             setUsernameAndPassword(Username.Text, Password.Text);
             //pass through to Logic to check if matching username and password
-            if (quicktest(username, password))
+            User user = new User();
+            if (user.LogInWithCredentials(username, password) != null)
             {
                 await openTestSite();
             }
@@ -66,7 +68,7 @@ namespace Mobeye
         }
         #endregion
 
-        
+
     }
 
 }
