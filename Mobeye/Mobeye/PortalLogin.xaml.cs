@@ -15,7 +15,9 @@ namespace Mobeye
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PortalLogin : ContentPage
     {
-        private string username, password;
+        public string username { get; private set; }
+        public string password { get; private set; }
+        public bool RememberCredentials { get; private set; }
 
         public PortalLogin()
         {
@@ -30,12 +32,16 @@ namespace Mobeye
             //pass through to Logic to check if matching username and password
             if (quicktest(username, password))
             {
-               await openTestSite();
+                await openTestSite();
             }
             else
             {
                 await DisplayAlert("Couldn't Log In.", "The username/password were incorrect", "OK");
             }
+        }
+        private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            RememberCredentials = RememberMe.IsChecked;//add user credentials to persistence
         }
 
         private void setUsernameAndPassword(string username, string password)
@@ -44,6 +50,7 @@ namespace Mobeye
             this.password = password;
         }
 
+        #region testing only!
         private bool quicktest(string username, string password)
         {
             if (username == "john.doe@mail.com" && password == "123456")
@@ -55,8 +62,11 @@ namespace Mobeye
 
         private Task openTestSite()
         {
-           return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
+            return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
         }
+        #endregion
+
+        
     }
 
 }

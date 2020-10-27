@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mobeye.App">
     <Application.Resources>
-
+        <Color x:Key="page_background">#C5D93E</Color>
+        <Color x:Key="button_background">#000000</Color>
+        <Color x:Key="button_text">#FFFFFF</Color>
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="#7A8726"/>
+            <Setter Property="BarTextColor" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>

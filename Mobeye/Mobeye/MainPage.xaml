@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobeye.MainPage">
+             x:Class="Mobeye.MainPage" BackgroundColor="{StaticResource page_background}">
 
     <StackLayout VerticalOptions="CenterAndExpand">
         <Image Source="mobeyelogo.png" Margin="0,0,0,25" />
-        <Button Text="Log in With Portal Account." Margin="50,0" Clicked="OnPortalLoginClick"/>
+        <Button Text="Log in With Portal Account." Margin="50,0" Clicked="OnPortalLoginClick" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
         <Label Text="OR" HorizontalTextAlignment="Center"/>
-        <Button Text="Log in As Contact Person." Margin="50,0" Clicked="OnContactPersonLogin"/>
+        <Button Text="Log in With Code." Margin="50,0" Clicked="OnContactPersonLogin" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
     </StackLayout>
 </ContentPage>

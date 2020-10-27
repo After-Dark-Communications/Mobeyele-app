@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobeye.CallKeyPage"
+             Title="Accessible CallKeys"  BackgroundColor="{StaticResource page_background}">
+
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <!--<Label Text="Stick Header"
+               FontSize="Medium"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />-->
+            <ScrollView VerticalOptions="FillAndExpand" x:Name="DoorContainer">
+                <StackLayout >
+                    <!--Label objects go here -->
+                    <Grid BackgroundColor="#33FFFFFF" Padding="10">
+                        <Label>Name: </Label>
+                    <Label Margin="40,0,0,0">Door1</Label>
+                        
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <ListView x:Name="AccessableDoorsList" ItemTapped="AccessableDoorsList_ItemTapped" ItemsSource="{Binding .}">
+                
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

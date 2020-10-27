@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobeye.ContactPersonLogin">
+             x:Class="Mobeye.ContactPersonLogin" BackgroundColor="{StaticResource page_background}">
     <ContentPage.Content>
         <StackLayout>
             <Image Source="mobeyelogo.png" Margin="0,10,0,25"/>
 
-            <Entry Placeholder="Access Code" Margin="20,0" MaxLength="5" Keyboard="Numeric" x:Name="EnteredCode" />
+            <Entry Placeholder="Access Code" Margin="20,0" MaxLength="5" Keyboard="Numeric" x:Name="EnteredCode"  TextChanged="EnteredCode_TextChanged"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

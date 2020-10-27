@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobeye.PortalLogin">
+             x:Class="Mobeye.PortalLogin" BackgroundColor="{StaticResource page_background}">
     <ContentPage.Content>
         <StackLayout>
             <Image Source="mobeyelogo.png" Margin="0,10,0,25" />
 
             <Entry Placeholder="Username" Keyboard="Email" Margin="20,0" x:Name="Username" />
             <Entry Placeholder="Password" IsPassword="True" Margin="20,0" x:Name="Password"/>
-            <Button Text="Log In" Margin="50,20,50,0" Clicked="LoginWithPortalAccount"/>
+            <Grid Margin="20,0">
+            <CheckBox CheckedChanged="CheckBox_CheckedChanged" x:Name="RememberMe"/>
+            <Label Text="Remember Me?" Margin="35,0,0,0" VerticalOptions="Center" FontSize="Large"/>                
+            </Grid>
+            <Button Text="Log In" Margin="50,20,50,0" Clicked="LoginWithPortalAccount" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
             <Label Text="Forgot Password?" FontSize="16" Padding="30,24,30,0" HorizontalTextAlignment="Center" TextColor="Blue" TextDecorations="Underline">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OpenURL" />
