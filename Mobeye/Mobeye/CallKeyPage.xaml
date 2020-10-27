@@ -10,19 +10,13 @@
                FontSize="Medium"
                FontAttributes="Bold"
                HorizontalOptions="Center" />-->
-            <ScrollView VerticalOptions="FillAndExpand" x:Name="DoorContainer">
-                <StackLayout >
+            <Button Text="Refresh List" Clicked="RefreshDoors" Margin="250,0,0,0"/>
+            <ScrollView VerticalOptions="FillAndExpand" >
+                <StackLayout x:Name="DoorContainer">
                     <!--Label objects go here -->
-                    <Grid BackgroundColor="#33FFFFFF" Padding="10">
-                        <Label>Name: </Label>
-                    <Label Margin="40,0,0,0">Door1</Label>
-                        
-                    </Grid>
                 </StackLayout>
             </ScrollView>
-            <ListView x:Name="AccessableDoorsList" ItemTapped="AccessableDoorsList_ItemTapped" ItemsSource="{Binding .}">
-                
-            </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

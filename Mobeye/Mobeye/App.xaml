@@ -7,7 +7,14 @@
         <Color x:Key="button_background">#000000</Color>
         <Color x:Key="button_text">#FFFFFF</Color>
         <Style TargetType="NavigationPage">
-            <Setter Property="BarBackgroundColor" Value="#7A8726"/>
+            <Setter Property="BarBackgroundColor">
+                <OnPlatform x:TypeArguments="Color">
+                    <OnPlatform.Platforms>
+                        <On Platform="iOS" Value="#C5D93E" />
+                        <On Platform="Android" Value="#7A8726" />
+                    </OnPlatform.Platforms>
+                </OnPlatform>
+            </Setter>
             <Setter Property="BarTextColor" Value="White"/>
         </Style>
     </Application.Resources>

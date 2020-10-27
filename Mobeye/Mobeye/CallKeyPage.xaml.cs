@@ -14,32 +14,71 @@ namespace Mobeye
     {
         public CallKeyPage()
         {
+            
             InitializeComponent();
 
             this.BindingContext = GetAccessableDoors();
         }
         //either per timeframe, when the user logs in or when the app is re-opened
-
+       //do we have that in the questions doc?
         public async void LoadAccessableDoors()
         {
             //create new container for every door.
+            
+        }
+
+        public async void RefreshDoors(object sender, EventArgs e)
+        {
+            List<string> Doors = GetAccessableDoors();
+            for (int i = 0; i < Doors.Count; i++)
+            {
+                DoorContainer.Children.Add(CreateNewDoorGrid(Doors[i]));
+            }
         }
 
         private void AccessableDoorsList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-
+            //do we know the location of a call key?
         }
+
+        private Grid CreateNewDoorGrid(string name)
+        {
+            Grid temp = new Grid
+            {
+                BackgroundColor = Color.FromHex("#7FFFFFFF"),
+            Padding = 10,
+            };
+            Label nameLabel = new Label
+            { 
+               FontAttributes = FontAttributes.Bold,
+               FontSize = 18,
+               Text = "Name:",
+            };
+            Label doorLabel = new Label
+            {
+                Margin = new Thickness(60, 0, 0, 0),
+                FontSize = 18,
+                Text = name,
+            };
+            Button button = new Button
+            {
+                Margin = new Thickness(0, 30, 0, 0),
+                Text = "Open",
+            };
+            temp.Children.Add(nameLabel);
+            temp.Children.Add(doorLabel);
+            temp.Children.Add(button);
+            return temp;
+        }
+
         private List<string> GetAccessableDoors()
         {
             List<string> temp = new List<string>();
-            temp.Add("Door1");
-            temp.Add("Door2");
-            temp.Add("Door3");
-            temp.Add("Door4");
-            temp.Add("Door5");
-            temp.Add("Door6");
-            temp.Add("Door7");
+            for (int i = 1; i < 14; i++)
+            {
+                temp.Add("Door" + i);
+            }
             return temp;
         }
-    }
+    }//different part
 }

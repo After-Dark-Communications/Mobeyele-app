@@ -30,8 +30,8 @@ namespace Mobeye
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
                 User user = new User();
-                if (user.LogInWithAccessCode(EnteredCode.Text) != null)
-                {
+                //if (user.LogInWithAccessCode(EnteredCode.Text) != null)
+                //{
                     if (EnteredCode.Text == CallKeyCode())//TODO: replace this with proper check for permission
                     {
                         GoToCallKeyPage();
@@ -40,7 +40,7 @@ namespace Mobeye
                     {
                         DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
                     }
-                }
+                //}
                 else
                 {
                     DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");

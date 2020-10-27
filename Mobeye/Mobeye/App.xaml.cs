@@ -12,11 +12,7 @@ namespace Mobeye
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage())
-            {
-                BarBackgroundColor = Color.FromHex("#C5D93E"),
-                BarTextColor = Color.White,
-            };
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

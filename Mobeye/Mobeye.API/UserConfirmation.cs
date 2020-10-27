@@ -28,6 +28,7 @@ namespace Mobeye.API
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
+            //TODO: catch exception, if unable to connect to server/ no internet connection
             using(HttpResponseMessage response = await APIHelper.API.GetAsync(""))
             {
                 if(response.IsSuccessStatusCode)

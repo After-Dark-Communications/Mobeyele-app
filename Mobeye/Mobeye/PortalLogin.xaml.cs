@@ -32,7 +32,7 @@ namespace Mobeye
             setUsernameAndPassword(Username.Text, Password.Text);
             //pass through to Logic to check if matching username and password
             User user = new User();
-            if (user.LogInWithCredentials(username, password) != null)
+            if (user.LogInWithCredentials(username, password) != null)//TODO: add remember me functionality
             {
                 await openTestSite();
             }
