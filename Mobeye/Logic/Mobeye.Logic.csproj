@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mobeye.API\Mobeye.API.csproj" />
     <ProjectReference Include="..\Mobeye.Dependency\Mobeye.Dependency.csproj" />
   </ItemGroup>
 
