@@ -16,7 +16,7 @@ namespace Mobeye.API
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("/profile/?Authcode="+ code))
             {
                 if(response.IsSuccessStatusCode)
                 {
@@ -28,7 +28,7 @@ namespace Mobeye.API
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
-            using(HttpResponseMessage response = await APIHelper.API.GetAsync(""))
+            using(HttpResponseMessage response = await APIHelper.API.GetAsync("/profile/?name=" + user.Name))
             {
                 if(response.IsSuccessStatusCode)
                 {
