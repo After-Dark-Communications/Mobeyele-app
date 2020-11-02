@@ -1,4 +1,5 @@
-﻿using Mobeye.Logic;
+﻿using Mobeye.Dependency;
+using Mobeye.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,17 +31,24 @@ namespace Mobeye
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
                 User user = new User();
-                //if (user.LogInWithAccessCode(EnteredCode.Text) != null)
-                //{
-                    if (EnteredCode.Text == CallKeyCode())//TODO: replace this with proper check for permission
+                UserModel res = user.LogInWithAccessCode(EnteredCode.Text);
+                if (res != null)
+                {
+                    //do we have that anywhere locally?
+                    switch (res.PermissionLevel)
                     {
-                        GoToCallKeyPage();
+                        case 2:
+                            DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
+                            //TODO: add actual functionality.
+                            break;
+                        case 3:
+                            GoToCallKeyPage();
+                            break;
+                        default:
+                            DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");
+                            return;
                     }
-                    else if (EnteredCode.Text == ContactPersonCode())//TODO: replace this with proper check for permission
-                    {
-                        DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
-                    }
-                //}
+                }
                 else
                 {
                     DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");

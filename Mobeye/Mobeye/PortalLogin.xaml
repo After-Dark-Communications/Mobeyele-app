@@ -18,6 +18,7 @@
                     <TapGestureRecognizer Tapped="OpenURL" />
                 </Label.GestureRecognizers>
             </Label>
+            <ActivityIndicator x:Name="loginLoad" IsRunning="False"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

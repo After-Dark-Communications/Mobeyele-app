@@ -14,7 +14,8 @@ namespace Mobeye.API
         public static void InitaliazeClient()
         {
             API = new HttpClient();
-            API.BaseAddress = new Uri("https://rest.mymobeye.com");
+            //API.BaseAddress = new Uri("http://localhost:3000/");
+            API.BaseAddress = new Uri("http://10.0.2.2:3000/");
             API.DefaultRequestHeaders.Accept.Clear();
             API.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

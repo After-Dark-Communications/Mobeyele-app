@@ -13,14 +13,23 @@ namespace Mobeye.Dependency
         public string Phonenumber { get; set; }
         public List<DeviceModel> ExternalDevices { get; set; }
         public int PermissionLevel { get; set; }
-        public UserModel(string name, string password)
+        public UserModel(string email, string password)
         {
-            Name = name;
+            Email = email;
             Password = password;
         }
         public UserModel()
         {
 
+        }
+        public UserModel(string Authkey, string name, string password, string emai, string phonenumber,int permissionlevel )
+        {
+            this.AuthKey = AuthKey;
+            this.Name = name;
+            this.Password = password;
+            this.Email = emai;
+            this.Phonenumber = phonenumber;
+            this.PermissionLevel = permissionlevel;
         }
     }
 }

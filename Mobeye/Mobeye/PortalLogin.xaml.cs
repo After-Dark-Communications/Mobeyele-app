@@ -10,13 +10,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 using Mobeye.Logic;
+using Mobeye.API;
 
 namespace Mobeye
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PortalLogin : ContentPage
     {
-        public string username { get; private set; }
+        public string email { get; private set; }
         public string password { get; private set; }
         public bool RememberCredentials { get; private set; }
 
@@ -27,19 +28,25 @@ namespace Mobeye
         }
         async void OpenURL(object sender, EventArgs e) => await openTestSite();
 
-        async void LoginWithPortalAccount(object sender, EventArgs e)
+        internal void LoginWithPortalAccount(object sender, EventArgs e)
         {
+            loginLoad.IsRunning = true;
             setUsernameAndPassword(Username.Text, Password.Text);
             //pass through to Logic to check if matching username and password
+            
+            
             User user = new User();
-            if (user.LogInWithCredentials(username, password) != null)//TODO: add remember me functionality
-            {
-                await openTestSite();
-            }
-            else
-            {
-                await DisplayAlert("Couldn't Log In.", "The username/password were incorrect", "OK");
-            }
+                if (user.LogInWithCredentials(email, password) != null)//TODO: add remember me functionality
+                {
+                    openTestSite();
+                    loginLoad.IsRunning = false;
+                }
+                else
+                {
+                    DisplayAlert("Couldn't Log In.", "The username/password were incorrect", "OK");
+                    loginLoad.IsRunning = false;
+                }
+            
         }
         private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
@@ -48,7 +55,7 @@ namespace Mobeye
 
         private void setUsernameAndPassword(string username, string password)
         {
-            this.username = username;
+            this.email = username;
             this.password = password;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Mobeye.Dependency;
 using Mobeye.API;
+using System.Threading.Tasks;
 
 namespace Mobeye.Logic
 {
@@ -15,12 +16,12 @@ namespace Mobeye.Logic
         {
             _user = user;
         }
-        public UserModel LogInWithCredentials(string username, string password)
+        public UserModel LogInWithCredentials(string email, string password)
         {
             //pass username + password to API
             //API returns UserModel or null
             //return UserModel
-            UserModel user = new UserModel(username, password);
+            UserModel user = new UserModel(email, password);
             UserModel receiveduser = _user.PortalOwnerConfirmationRequest(user).Result;
             return receiveduser;
         }
