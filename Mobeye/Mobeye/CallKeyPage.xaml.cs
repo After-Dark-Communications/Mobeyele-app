@@ -14,7 +14,6 @@ namespace Mobeye
     {
         public CallKeyPage()
         {
-
             InitializeComponent();
 
             this.BindingContext = GetAccessableDoors();
@@ -27,7 +26,7 @@ namespace Mobeye
 
         }
 
-        public async void RefreshDoors(object sender, EventArgs e)
+        public void RefreshDoors(object sender, EventArgs e)
         {
             List<string> Doors = GetAccessableDoors();
             DoorContainer.Children.Clear();
