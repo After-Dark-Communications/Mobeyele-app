@@ -6,30 +6,32 @@ namespace Mobeye.Dependency
 {
     public class UserModel
     {
-        public string AuthKey { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public string name { get; set; }
+        public string password { get; set; }
+        public string emailaddress { get; set; }
+        public int Authlevel { get; set; }
+        public string Authcode { get; set; }
+        public string Accescode { get; set; }
         public string Phonenumber { get; set; }
         public List<DeviceModel> ExternalDevices { get; set; }
-        public int PermissionLevel { get; set; }
         public UserModel(string email, string password)
         {
-            Email = email;
-            Password = password;
+            this.emailaddress = email;
+            this.password = password;
         }
         public UserModel()
         {
 
         }
-        public UserModel(string Authkey, string name, string password, string emai, string phonenumber,int permissionlevel )
+        public UserModel(string name, string password, string emailaddress, int Authlevel, string Authcode, string Accescode,string Phonenumber = null)
         {
-            this.AuthKey = AuthKey;
-            this.Name = name;
-            this.Password = password;
-            this.Email = emai;
-            this.Phonenumber = phonenumber;
-            this.PermissionLevel = permissionlevel;
+            this.name=name;
+            this.password=password;
+            this.emailaddress=emailaddress;
+            this.Authlevel=Authlevel;
+            this.Authcode=Authcode;
+            this.Accescode=Accescode;
+            this.Phonenumber = Phonenumber;
         }
     }
 }

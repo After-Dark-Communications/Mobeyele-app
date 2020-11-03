@@ -15,38 +15,21 @@ namespace Mobeye.API
         {
             throw new NotImplementedException();
         }
-        public async Task<UserModel> GetCodeConfirmRequest(string code)
+        public UserModel GetCodeConfirmRequest(string code)
         {
-            UserModel user = new UserModel();
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("profile/?Authcode=" + code))
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("profile/?Authcode=" + code).Result)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    user = await response.Content.ReadAsAsync<UserModel>();
-                    return user;
-                }
+                return JsonToUser(response);
             }
-            return user;
         }
-        public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
+        public UserModel PortalOwnerConfirmationRequest(UserModel user)
         {
-            //TODO: fix deadlock
             //TODO: catch exception, if unable to connect to server/ no internet connection
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("profile/?emailaddress=" + user.Email))
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("profile/?emailaddress=" + user.emailaddress).Result)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    Task<string> resp = response.Content.ReadAsStringAsync();
-                    string contents = resp.Result;
-                    JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["Authcode"].ToString(),obj["name"].ToString(),obj["password"].ToString(),obj["emailaddress"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
-                    return res;
-                }
-                else
-                {
-                    return null;
-                }
+                return JsonToUser(response);
             }
+            #region old
             //try
             //{
             //    using (HttpResponseMessage response = await APIHelper.API.GetAsync("profile/?emailaddress=" + user.Email))
@@ -64,6 +47,43 @@ namespace Mobeye.API
             //    throw;
             //}
             //return null;
+            #endregion
+        }
+        private UserModel JsonToUser(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                string resp = response.Content.ReadAsStringAsync().Result;
+                JArray contents = JArray.Parse(resp);
+                if (contents.Count > 0)//json always returns something if the request is valid, thus it can return an empty array
+                {
+                    JObject content = JObject.FromObject(contents[0]);
+                    if (content["Phonenumber"]!= null)
+                    {
+                    UserModel res = new UserModel(
+                        content["name"].ToString(),
+                        content["password"].ToString(),
+                        content["emailaddress"].ToString(),
+                        Convert.ToInt32(content["Authlevel"]),
+                        content["Authcode"].ToString(),
+                        content["Accescode"].ToString(),
+                        content["Phonenumber"].ToString());
+                    return res;
+                    }
+                    else
+                    {
+                        UserModel res = new UserModel(
+                        content["name"].ToString(),
+                        content["password"].ToString(),
+                        content["emailaddress"].ToString(),
+                        Convert.ToInt32(content["Authlevel"]),
+                        content["Authcode"].ToString(),
+                        content["Accescode"].ToString());
+                        return res;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

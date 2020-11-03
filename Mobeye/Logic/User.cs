@@ -22,7 +22,7 @@ namespace Mobeye.Logic
             //API returns UserModel or null
             //return UserModel
             UserModel user = new UserModel(email, password);
-            UserModel receiveduser = _user.PortalOwnerConfirmationRequest(user).Result;
+            UserModel receiveduser = _user.PortalOwnerConfirmationRequest(user);
             return receiveduser;
         }
         public UserModel LogInWithAccessCode(string accessCode)
@@ -31,7 +31,7 @@ namespace Mobeye.Logic
             //API returns UserModel or null
             //return UserModel
             UserModel user = new UserModel();
-            user = _user.GetCodeConfirmRequest(accessCode).Result;
+            user = _user.GetCodeConfirmRequest(accessCode);
             return user;
         }
         /*public bool LogIn(string authorizationCode)
