@@ -104,6 +104,7 @@ namespace Mobeye
                 Text = "Open",
 
             };
+            //TODO: add button clicked event to mockopendoor
             //button.Clicked += Button_Clicked;
             grid.Children.Add(nameLabel);
             grid.Children.Add(doorLabel);
