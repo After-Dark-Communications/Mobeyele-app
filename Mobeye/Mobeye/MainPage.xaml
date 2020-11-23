@@ -5,10 +5,10 @@
 
     <StackLayout VerticalOptions="CenterAndExpand">
         <Image Source="mobeyelogo.png" Margin="0,0,0,25" />
-        <Button Text="Log in With Portal Account." Margin="50,0" Clicked="OnPortalLoginClick" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
-        <Label Text="OR" HorizontalTextAlignment="Center"/>
-        <Button Text="Log in With Code." Margin="50,0" Clicked="OnContactPersonLogin" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
+        <!--<Button Text="Log in With Portal Account." Margin="50,0" Clicked="OnPortalLoginClick" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
+        <Label Text="OR" HorizontalTextAlignment="Center"/>-->
+        <!--<Button Text="Log in With Code." Margin="50,0" Clicked="OnContactPersonLogin" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>-->
         <!--<Button Text="Test" Margin="50,0" Clicked="Button_Clicked" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>-->
-        <ActivityIndicator x:Name="webload" IsRunning="False"></ActivityIndicator>
+        <ActivityIndicator x:Name="webload" IsRunning="false"></ActivityIndicator>
     </StackLayout>
 </ContentPage>
