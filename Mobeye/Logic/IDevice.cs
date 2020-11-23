@@ -6,6 +6,6 @@ namespace Mobeye.Logic
 {
     public interface IDevice
     {
-        string GetIMEI();
+        string GetIdentifier();
     }
 }

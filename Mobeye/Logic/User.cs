@@ -8,19 +8,46 @@ namespace Mobeye.Logic
     public class User
     {
         private readonly UserConfirmation _user;
+        private readonly IDevice _device;
         public User()
         {
             _user = new UserConfirmation();
+        }
+        public User(string vendor)
+        {
+            _user = new UserConfirmation();
+            switch (vendor){
+                case "Android":
+                    _device = new AndroidDevice();
+                    break;
+                case "iOS":
+                    _device = new IOSDevice();
+                    break;
+                default:
+                    //nothing
+                    break;
+            }
         }
         public User(UserConfirmation user)
         {
             _user = user;
         }
-        public UserModel LogInWithCredentials(string email, string password)
+        public string Register(string smsCode)
+        {
+            string privateKey = "";
+            if(_device != null)
+            {
+                privateKey = _user.AuthorizeUser(_device.GetIdentifier(), smsCode);
+            }
+            return privateKey;
+        }
+        public UserModel LogInWithPrivateKey(string privateKey)
         {
             //pass username + password to API
             //API returns UserModel or null
             //return UserModel
+            UserModel user;
+
             throw new NotImplementedException();
         }
         /// <summary>

@@ -10,7 +10,7 @@ namespace Mobeye.Logic
 {
     class AndroidDevice : IDevice
     {
-        public string GetIMEI()
+        public string GetIdentifier()
         {
             try
             {
