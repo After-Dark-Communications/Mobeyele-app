@@ -37,7 +37,7 @@ namespace Mobeye.Logic
             string privateKey = "";
             if(_device != null)
             {
-                privateKey = _user.AuthorizeUser(_device.GetIdentifier(), smsCode);
+                privateKey = _user.RegisterUser(_device.GetIdentifier(), smsCode);
             }
             return privateKey;
         }
@@ -46,27 +46,15 @@ namespace Mobeye.Logic
             //pass username + password to API
             //API returns UserModel or null
             //return UserModel
-            UserModel user;
+            UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier());
 
-            throw new NotImplementedException();
+            if(user != null)
+            {
+                return user;
+            }
+            return null;
         }
-        /// <summary>
-        /// Attempts to login the user with the provided access code
-        /// </summary>
-        /// <param name="accessCode">The access code filled in by the user</param>
-        /// <returns>A Usermodel</returns>
-        public UserModel LogInWithAccessCode(string accessCode)
-        {
-            //pass accessCode to API
-            //API returns UserModel or null
-            //return UserModel
-
-            //No longer applicable since the access code doesn't require a usermodel
-            //UserModel user = new UserModel();
-            //user = _user.GetCodeConfirmRequest(accessCode);
-            //return user;
-            throw new NotImplementedException();
-        }
+        
         /*public bool LogIn(string authorizationCode)
         {
             throw new NotImplementedException();
