@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
+using Mobeye.API;
 
 namespace Mobeye
 {
@@ -9,9 +11,8 @@ namespace Mobeye
         public App()
         {
             InitializeComponent();
-
+            APIHelper.InitaliazeClient(Device.RuntimePlatform);
             MainPage = new NavigationPage(new MainPage());
-
         }
 
         protected override void OnStart()
