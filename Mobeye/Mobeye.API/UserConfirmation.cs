@@ -1,5 +1,6 @@
 ﻿
 using Mobeye.Dependency;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,26 @@ namespace Mobeye.API
                 }
             }
             return user;
+        }
+        //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
+        public async Task<string> AuthorizeUser(string Imei, string regCode)
+        {
+            //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
+            var contentString = string.Empty;
+            dynamic reg = new JObject();
+            reg.Imei = Imei;
+            reg.regCode = regCode;
+
+            HttpContent regcon = new StringContent(JObject.FromObject(reg));
+            using (HttpResponseMessage response = await APIHelper.API.PostAsync("api/auth/", regcon))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    contentString = response.Content.ReadAsStringAsync().Result;
+                    return contentString;
+                }
+                return response.StatusCode.ToString();
+            }
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
