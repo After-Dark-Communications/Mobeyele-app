@@ -32,14 +32,14 @@ namespace Mobeye.API
         {
             //TODO: fix deadlock
             //TODO: catch exception, if unable to connect to server/ no internet connection
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("profile/?emailaddress=" + user.Email))
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["Authcode"].ToString(),obj["name"].ToString(),obj["password"].ToString(),obj["emailaddress"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
+                    UserModel res = new UserModel(obj["Authcode"].ToString(),obj["name"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
                     return res;
                 }
                 else
