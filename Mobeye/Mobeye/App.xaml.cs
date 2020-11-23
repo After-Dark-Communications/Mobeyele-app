@@ -11,7 +11,7 @@ namespace Mobeye
         public App()
         {
             InitializeComponent();
-            APIHelper.InitaliazeClient();
+            APIHelper.InitaliazeClient(Device.RuntimePlatform);
             MainPage = new NavigationPage(new MainPage());
         }
 

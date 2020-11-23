@@ -26,16 +26,17 @@ namespace Mobeye
             await Navigation.PushAsync(new CallKeyPage());
         }
 
-        private void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
+        internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
+                authLoad.IsRunning = true;
                 User user = new User();
                 UserModel res = user.LogInWithAccessCode(EnteredCode.Text);
                 if (res != null)
                 {
-                    //do we have that anywhere locally?
-                    switch (res.PermissionLevel)
+                    authLoad.IsRunning = false;
+                    switch (res.Authlevel)
                     {
                         case 2:
                             DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
@@ -51,20 +52,11 @@ namespace Mobeye
                 }
                 else
                 {
+                    authLoad.IsRunning = false;
                     DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");
                     EnteredCode.Text = "";
                 }
             }
-        }
-
-        private string ContactPersonCode()
-        {
-            return "67890";
-        }
-
-        private string CallKeyCode()
-        {
-            return "12345";
         }
     }
 }

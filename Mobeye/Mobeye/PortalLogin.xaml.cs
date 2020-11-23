@@ -32,19 +32,16 @@ namespace Mobeye
         {
             loginLoad.IsRunning = true;
             setUsernameAndPassword(Username.Text, Password.Text);
-            //pass through to Logic to check if matching username and password
-            
-            
             User user = new User();
                 if (user.LogInWithCredentials(email, password) != null)//TODO: add remember me functionality
                 {
-                    openTestSite();
                     loginLoad.IsRunning = false;
+                    openTestSite();
                 }
                 else
                 {
-                    DisplayAlert("Couldn't Log In.", "The username/password were incorrect", "OK");
                     loginLoad.IsRunning = false;
+                    DisplayAlert("Couldn't Log In.", "The username/password is incorrect", "OK");
                 }
             
         }
@@ -73,9 +70,20 @@ namespace Mobeye
         {
             return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
         }
+
         #endregion
 
-
+        private void Login_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(Username.Text) && !String.IsNullOrWhiteSpace(Password.Text))
+            {
+                LoginButton.IsEnabled = true;
+            }
+            else
+            {
+                LoginButton.IsEnabled = false;
+            }
+        }
     }
 
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -14,7 +15,6 @@ namespace Mobeye
     {
         public CallKeyPage()
         {
-
             InitializeComponent();
 
             this.BindingContext = GetAccessableDoors();
@@ -27,7 +27,7 @@ namespace Mobeye
 
         }
 
-        public async void RefreshDoors(object sender, EventArgs e)
+        public void RefreshDoors(object sender, EventArgs e)
         {
             List<string> Doors = GetAccessableDoors();
             DoorContainer.Children.Clear();
@@ -37,9 +37,41 @@ namespace Mobeye
             }
         }
 
-        private void AccessableDoorsList_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async Task MockOpenDoor(string Doorname)
         {
-            //do we know the location of a call key?
+
+            //OpeningLabel.IsVisible = true;
+            //TODO: add text "Opening door 'X'..." with increasing elipses
+            //OpeningLabel.Text = $"Opening \"{Doorname}\"";
+            //await Task.Delay(sleepTime);
+            //OpeningLabel.Text += ".";
+            //await Task.Delay(sleepTime);
+            //OpeningLabel.Text += ".";
+            //await Task.Delay(sleepTime);
+            //OpeningLabel.Text += ".";
+            //await Task.Delay(sleepTime);
+            //OpeningLabel.Text = "";
+            try
+            {
+                //ShowProgresBar("Loading...");
+                OpeningLabel.Text = $"Opening \"{Doorname}\"";
+
+                for (int i = 0; i < 4; i++)
+                {
+                    await Task.Run(() =>
+                    {
+                        return Task.Delay(1000);
+                    });
+                    OpeningLabel.Text += ".";
+                }
+                OpeningLabel.Text = $"Opened Door \"{Doorname}\"";
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //OpeningLabel.IsVisible = false;
         }
 
         private Frame CreateNewDoorItem(string name)
@@ -70,7 +102,10 @@ namespace Mobeye
             {
                 Margin = new Thickness(0, 30, 0, 0),
                 Text = "Open",
+
             };
+            //TODO: add button clicked event to mockopendoor
+            //button.Clicked += Button_Clicked;
             grid.Children.Add(nameLabel);
             grid.Children.Add(doorLabel);
             grid.Children.Add(button);
@@ -86,6 +121,11 @@ namespace Mobeye
                 temp.Add("Door" + i);
             }
             return temp;
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await MockOpenDoor("Door1");
         }
     }//different part
 }
