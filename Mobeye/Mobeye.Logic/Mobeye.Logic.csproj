@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mobeye.Android\Mobeye.Android.csproj" />
+    <ProjectReference Include="..\Mobeye.API\Mobeye.API.csproj" />
+    <ProjectReference Include="..\MobEye.Dependency\Mobeye.Dependency.csproj" />
+    <ProjectReference Include="..\Mobeye.iOS\Mobeye.iOS.csproj" />
+    <ProjectReference Include="..\Mobeye\Mobeye.csproj" />
+  </ItemGroup>
+
+</Project>
