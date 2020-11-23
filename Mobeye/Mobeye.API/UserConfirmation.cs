@@ -39,7 +39,7 @@ namespace Mobeye.API
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["Authcode"].ToString(),obj["name"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
+                    UserModel res = new UserModel(obj["SmsKey"].ToString(),obj["Authcode"].ToString(),obj["name"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
                     return res;
                 }
                 else
@@ -64,6 +64,40 @@ namespace Mobeye.API
             //    throw;
             //}
             //return null;
+
+        }
+        private UserModel JsonToUser(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                string resp = response.Content.ReadAsStringAsync().Result;
+                JArray contents = JArray.Parse(resp);
+                if (contents.Count > 0)//json always returns something if the request is valid, thus it can return an empty array
+                {
+                    JObject content = JObject.FromObject(contents[0]);
+                    if (content["Phonenumber"] != null)
+                    {
+                        UserModel res = new UserModel(
+                            content["SmsKey"].ToString(),
+                            content["PrivateKey"].ToString(),
+                            content["Name"].ToString(),
+                            content["Phonenumber"].ToString(),
+                            Convert.ToInt32(content["Authlevel"]));
+                        return res;
+                    }
+                    else
+                    {
+                        UserModel res = new UserModel(
+                        content["SmsKey"].ToString(),
+                        content["PrivateKey"].ToString(),
+                        content["Name"].ToString(),
+                        content["Phonenumber"].ToString(),
+                        Convert.ToInt32(content["Authlevel"]));
+                        return res;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

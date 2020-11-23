@@ -21,18 +21,24 @@ namespace Mobeye.Logic
             //pass username + password to API
             //API returns UserModel or null
             //return UserModel
-            UserModel user = new UserModel(email, password);
-            UserModel receiveduser = _user.PortalOwnerConfirmationRequest(user);
-            return receiveduser;
+            throw new NotImplementedException();
         }
+        /// <summary>
+        /// Attempts to login the user with the provided access code
+        /// </summary>
+        /// <param name="accessCode">The access code filled in by the user</param>
+        /// <returns>A Usermodel</returns>
         public UserModel LogInWithAccessCode(string accessCode)
         {
             //pass accessCode to API
             //API returns UserModel or null
             //return UserModel
-            UserModel user = new UserModel();
-            user = _user.GetCodeConfirmRequest(accessCode);
-            return user;
+
+            //No longer applicable since the access code doesn't require a usermodel
+            //UserModel user = new UserModel();
+            //user = _user.GetCodeConfirmRequest(accessCode);
+            //return user;
+            throw new NotImplementedException();
         }
         /*public bool LogIn(string authorizationCode)
         {
