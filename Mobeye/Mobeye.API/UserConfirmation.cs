@@ -33,7 +33,7 @@ namespace Mobeye.API
         public async Task<string> RegisterUser(string Imei, string regCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
-            var contentString = string.Empty;
+            string contentString = string.Empty;
             dynamic reg = new JObject();
             reg.Imei = Imei;
             reg.regCode = regCode;
@@ -43,15 +43,25 @@ namespace Mobeye.API
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    contentString = response.Content.ReadAsStringAsync().Result;
+                    contentString =  response.Content.ReadAsStringAsync().Result;
                     return contentString;
                 }
                 return response.StatusCode.ToString();
             }
         }
-        public async Task LoginUser(string Imei, string privateKey)
+        public async Task<UserModel> LoginUser(string Imei, string privateKey)
         {
-            throw new NotImplementedException();
+            UserModel user = new UserModel();
+            string contentString = string.Empty;
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/auth/" + Imei + privateKey))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    user = response.Content.ReadAsAsync<UserModel>().Result;
+                    return user;
+                }
+            }
+            return user;
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
