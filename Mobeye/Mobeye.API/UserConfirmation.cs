@@ -30,7 +30,7 @@ namespace Mobeye.API
             return user;
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
-        public async Task<string> AuthorizeUser(string Imei, string regCode)
+        public async Task<string> RegisterUser(string Imei, string regCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             var contentString = string.Empty;
@@ -48,6 +48,10 @@ namespace Mobeye.API
                 }
                 return response.StatusCode.ToString();
             }
+        }
+        public async Task LoginUser(string Imei, string privateKey)
+        {
+            throw new NotImplementedException();
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
