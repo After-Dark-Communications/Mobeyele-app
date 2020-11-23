@@ -6,17 +6,19 @@ namespace Mobeye.Dependency
 {
     public class UserModel
     {
-        public string AuthKey { get; set; }
+        public string SmsKey { get; set; }
+        public string PrivateKey { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
         public string Phonenumber { get; set; }
         public List<DeviceModel> ExternalDevices { get; set; }
         public int PermissionLevel { get; set; }
-        public UserModel(string name, string password)
+        public UserModel(string smskey, string privatekey, string name, string phonenumber, int permissionlevel)
         {
-            Name = name;
-            Password = password;
+            this.SmsKey = smskey;
+            this.PrivateKey = privatekey;
+            this.Name = name;
+            this.Phonenumber = phonenumber;
+            this.PermissionLevel = permissionlevel;
         }
         public UserModel()
         {
