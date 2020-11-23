@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 using Foundation;
@@ -22,6 +23,7 @@ namespace Mobeye.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            //UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(197, 217, 62);
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
