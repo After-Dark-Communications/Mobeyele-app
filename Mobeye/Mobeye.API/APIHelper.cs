@@ -15,8 +15,11 @@ namespace Mobeye.API
         public static void InitaliazeClient(string RuntimePlatform)
         {
             API = new HttpClient();
-            //API.BaseAddress = new Uri("http://localhost:3000/");
+#if DEBUG
             API.BaseAddress = new Uri("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/");
+#else 
+            API.BaseAddress = new Uri("https://www.api.mymobeye.com/api");
+#endif
             API.DefaultRequestHeaders.Accept.Clear();
             API.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
