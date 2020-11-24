@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
@@ -35,28 +35,42 @@ namespace Mobeye
                 UserModel res = user.LogInWithAccessCode(EnteredCode.Text);
                 if (res != null)
                 {
-                    authLoad.IsRunning = false;
-                    switch (res.Authlevel)
+                    switch (res.PermissionLevel)
                     {
+                        case 1:
+                            authLoad.IsRunning = false;
+#if DEBUG
+                            openTestSite();
+#else
+                            //TODO: go to mobeye with login auth
+#endif
+                            break;
                         case 2:
                             DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
+                            authLoad.IsRunning = false;
                             //TODO: add actual functionality.
                             break;
                         case 3:
                             GoToCallKeyPage();
+                            authLoad.IsRunning = false;
                             break;
                         default:
                             DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");
+                            authLoad.IsRunning = false;
                             return;
                     }
                 }
                 else
                 {
-                    authLoad.IsRunning = false;
-                    DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");
+                    DisplayAlert("Wrong code", "We could not verify the code \"" + EnteredCode.Text + "\" to be correct", "Ok");
                     EnteredCode.Text = "";
+                    authLoad.IsRunning = false;
                 }
             }
+        }
+        private Task openTestSite()
+        {
+            return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
         }
     }
 }

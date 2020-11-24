@@ -10,5 +10,6 @@
         <!--<Button Text="Log in With Code." Margin="50,0" Clicked="OnContactPersonLogin" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>-->
         <!--<Button Text="Test" Margin="50,0" Clicked="Button_Clicked" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>-->
         <ActivityIndicator x:Name="webload" IsRunning="false"></ActivityIndicator>
+        <Button Text="Try Again" Margin="50,0" Clicked="Retry_Connection" IsVisible="false" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}" x:Name="retryButton"/>
     </StackLayout>
 </ContentPage>
