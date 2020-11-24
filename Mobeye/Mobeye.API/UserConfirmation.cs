@@ -33,8 +33,9 @@ namespace Mobeye.API
         public async Task<string> RegisterUser(string Imei, string regCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
+            //TODO: fix json 
             string contentString = string.Empty;
-            dynamic reg = new JObject();
+            /*dynamic reg = new JObject();
             reg.Imei = Imei;
             reg.regCode = regCode;
 
@@ -47,7 +48,8 @@ namespace Mobeye.API
                     return contentString;
                 }
                 return response.StatusCode.ToString();
-            }
+            }*/
+            throw new NotImplementedException();
         }
         public async Task<UserModel> LoginUser(string Imei, string privateKey)
         {
