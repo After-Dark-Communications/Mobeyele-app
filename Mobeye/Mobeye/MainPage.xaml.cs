@@ -66,7 +66,7 @@ namespace Mobeye
             NetworkAccess netStatus = Connectivity.NetworkAccess;
             if (netStatus == NetworkAccess.Internet)
             {
-                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))
+                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
                 {
                     await Navigation.PushAsync(new ContactPersonLogin());
                 }

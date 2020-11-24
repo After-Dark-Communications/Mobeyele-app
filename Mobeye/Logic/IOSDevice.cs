@@ -10,7 +10,7 @@ namespace Mobeye.Logic
         public string GetIdentifier()
         {
             var nsUid = UIDevice.CurrentDevice.IdentifierForVendor;
-            string guidElements = "";//nsUid.AsString();
+            string guidElements = nsUid.AsString();
 
             return guidElements;
         }

@@ -16,7 +16,8 @@ namespace Mobeye.Logic
         public User(string vendor)
         {
             _user = new UserConfirmation();
-            switch (vendor){
+            switch (vendor)
+            {
                 case "Android":
                     _device = new AndroidDevice();
                     break;
@@ -35,7 +36,7 @@ namespace Mobeye.Logic
         public string Register(string smsCode)
         {
             string privateKey = "";
-            if(_device != null)
+            if (_device != null)
             {
                 privateKey = _user.RegisterUser(_device.GetIdentifier(), smsCode).Result;
             }
@@ -48,13 +49,23 @@ namespace Mobeye.Logic
             //return UserModel
             UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier()).Result;
 
-            if(user != null)
+            if (user != null)
             {
                 return user;
             }
             return null;
         }
-        
+        public UserModel createMinimalUM(string smsKey, string privateKey)
+        {
+            UserModel user = new UserModel();
+            user.SmsKey = smsKey;
+            user.PrivateKey = privateKey;
+            user.Imei = _device.GetIdentifier();
+            user.Name = "";
+            user.Phonenumber = "";
+            user.PermissionLevel = 999;
+            return user;
+        }
         /*public bool LogIn(string authorizationCode)
         {
             throw new NotImplementedException();

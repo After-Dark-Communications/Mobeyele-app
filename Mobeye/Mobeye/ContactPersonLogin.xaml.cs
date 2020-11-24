@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
@@ -31,15 +31,17 @@ namespace Mobeye
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
                 //TODO: fix usermodel
-                /*
                 authLoad.IsRunning = true;
                 User user = new User();
-                UserModel res = user.LogInWithAccessCode(EnteredCode.Text);
+                UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
                 if (res != null)
                 {
                     authLoad.IsRunning = false;
                     switch (res.PermissionLevel)
                     {
+                        case 1:
+                            openTestSite();
+                            break;
                         case 2:
                             DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
                             //TODO: add actual functionality.
@@ -55,11 +57,33 @@ namespace Mobeye
                 else
                 {
                     authLoad.IsRunning = false;
-                    DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");
-                    EnteredCode.Text = "";
+                    if (successfullRegister(user))
+                    {
+                        UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
+                        UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
+                    }
+                    else
+                    {
+                        DisplayAlert("Wrong code", "We could not verify the code \"" + EnteredCode.Text + "\" to be correct", "Ok");
+                        EnteredCode.Text = "";
+                    }
                 }
-                */
             }
+        }
+
+        private Task openTestSite()
+        {
+            return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
+        }
+
+        private bool successfullRegister(User user)
+        {
+            string res = user.Register(EnteredCode.Text);
+            if (!string.IsNullOrWhiteSpace(res))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

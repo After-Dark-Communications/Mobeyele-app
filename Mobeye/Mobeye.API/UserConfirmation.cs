@@ -35,21 +35,22 @@ namespace Mobeye.API
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             //TODO: fix json 
             string contentString = string.Empty;
-            /*dynamic reg = new JObject();
-            reg.Imei = Imei;
-            reg.regCode = regCode;
 
-            HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = await APIHelper.API.PostAsync("api/auth/", regcon))
+            //HttpContent regcon = new StringContent(JObject.FromObject(reg));
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/users?Imei="+Imei+"&SmsKey="+regCode))
             {
                 if (response.IsSuccessStatusCode)
                 {
+                    string resp = response.Content.ReadAsStringAsync().Result;
+                    JArray contents = JArray.Parse(resp);
+                    if (contents.Count > 0)
+                    {
                     contentString =  response.Content.ReadAsStringAsync().Result;
                     return contentString;
+                    }
                 }
                 return response.StatusCode.ToString();
-            }*/
-            throw new NotImplementedException();
+            }
         }
         public async Task<UserModel> LoginUser(string Imei, string privateKey)
         {
@@ -76,7 +77,7 @@ namespace Mobeye.API
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["SmsKey"].ToString(),obj["Authcode"].ToString(),obj["name"].ToString(),obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
+                    UserModel res = new UserModel(obj["SmsKey"].ToString(),obj["Authcode"].ToString(),obj["name"].ToString(), obj["Imei"].ToString(), obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
                     return res;
                 }
                 else
@@ -118,6 +119,7 @@ namespace Mobeye.API
                             content["SmsKey"].ToString(),
                             content["PrivateKey"].ToString(),
                             content["Name"].ToString(),
+                            content["Imei"].ToString(),
                             content["Phonenumber"].ToString(),
                             Convert.ToInt32(content["Authlevel"]));
                         return res;
@@ -128,6 +130,7 @@ namespace Mobeye.API
                         content["SmsKey"].ToString(),
                         content["PrivateKey"].ToString(),
                         content["Name"].ToString(),
+                        content["Imei"].ToString(),
                         content["Phonenumber"].ToString(),
                         Convert.ToInt32(content["Authlevel"]));
                         return res;
