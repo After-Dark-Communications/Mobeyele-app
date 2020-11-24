@@ -17,6 +17,7 @@ namespace Mobeye
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PortalLogin : ContentPage
     {
+        /*
         public string email { get; private set; }
         public string password { get; private set; }
         public bool RememberCredentials { get; private set; }
@@ -84,6 +85,7 @@ namespace Mobeye
                 LoginButton.IsEnabled = false;
             }
         }
+        */
     }
 
 }
