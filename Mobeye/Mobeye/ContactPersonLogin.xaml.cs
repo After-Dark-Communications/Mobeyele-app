@@ -36,7 +36,7 @@ namespace Mobeye
                 if (res != null)
                 {
                     authLoad.IsRunning = false;
-                    switch (res.Authlevel)
+                    switch (res.PermissionLevel)
                     {
                         case 2:
                             DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
