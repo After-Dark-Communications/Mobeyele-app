@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-//using Android.Telephony;TODO: fix could not find error
+using Android.Telephony;//TODO: fix could not find error
 using Mobeye.Logic;
 using Xamarin.Forms;
 
@@ -12,7 +12,6 @@ namespace Mobeye.Logic
     {
         public string GetIdentifier()
         {
-            /*
             try
             {
                 TelephonyManager manager = (TelephonyManager)Android.App.Application.Context.GetSystemService(Android.Content.Context.TelephonyService);
@@ -23,7 +22,6 @@ namespace Mobeye.Logic
             {
                 return null;
             }
-            */
             return "";
         }
     }
