@@ -30,13 +30,15 @@ namespace Mobeye
         {
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
+                //TODO: fix usermodel
+                /*
                 authLoad.IsRunning = true;
                 User user = new User();
                 UserModel res = user.LogInWithAccessCode(EnteredCode.Text);
                 if (res != null)
                 {
                     authLoad.IsRunning = false;
-                    switch (res.Authlevel)
+                    switch (res.PermissionLevel)
                     {
                         case 2:
                             DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
@@ -56,6 +58,7 @@ namespace Mobeye
                     DisplayAlert("Wrong code", "We could not verify the code \""+EnteredCode.Text+"\" to be correct", "Ok");
                     EnteredCode.Text = "";
                 }
+                */
             }
         }
     }

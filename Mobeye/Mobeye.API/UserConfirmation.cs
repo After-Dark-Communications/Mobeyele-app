@@ -1,4 +1,5 @@
 using Mobeye.Dependency;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System;
@@ -23,6 +24,42 @@ namespace Mobeye.API
                 if (response.IsSuccessStatusCode)
                 {
                     user = await response.Content.ReadAsAsync<UserModel>();
+                    return user;
+                }
+            }
+            return user;
+        }
+        //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
+        public async Task<string> RegisterUser(string Imei, string regCode)
+        {
+            //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
+            //TODO: fix json 
+            string contentString = string.Empty;
+            /*dynamic reg = new JObject();
+            reg.Imei = Imei;
+            reg.regCode = regCode;
+
+            HttpContent regcon = new StringContent(JObject.FromObject(reg));
+            using (HttpResponseMessage response = await APIHelper.API.PostAsync("api/auth/", regcon))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    contentString =  response.Content.ReadAsStringAsync().Result;
+                    return contentString;
+                }
+                return response.StatusCode.ToString();
+            }*/
+            throw new NotImplementedException();
+        }
+        public async Task<UserModel> LoginUser(string Imei, string privateKey)
+        {
+            UserModel user = new UserModel();
+            string contentString = string.Empty;
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/auth/" + Imei + privateKey))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    user = response.Content.ReadAsAsync<UserModel>().Result;
                     return user;
                 }
             }

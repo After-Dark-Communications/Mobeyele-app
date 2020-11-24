@@ -30,7 +30,8 @@ namespace Mobeye
 
         internal void LoginWithPortalAccount(object sender, EventArgs e)
         {
-            loginLoad.IsRunning = true;
+            //TODO: redundant
+           /* loginLoad.IsRunning = true;
             setUsernameAndPassword(Username.Text, Password.Text);
             User user = new User();
                 if (user.LogInWithCredentials(email, password) != null)//TODO: add remember me functionality
@@ -43,7 +44,7 @@ namespace Mobeye
                     loginLoad.IsRunning = false;
                     DisplayAlert("Couldn't Log In.", "The username/password is incorrect", "OK");
                 }
-            
+            */
         }
         private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
