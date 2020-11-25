@@ -32,27 +32,11 @@ namespace Mobeye
             {
                 //TODO: fix usermodel
                 authLoad.IsRunning = true;
-                User user = new User();
+                User user = new User(Device.RuntimePlatform);
                 UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
                 if (res != null)
                 {
-                    authLoad.IsRunning = false;
-                    switch (res.PermissionLevel)
-                    {
-                        case 1:
-                            openTestSite();
-                            break;
-                        case 2:
-                            DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
-                            //TODO: add actual functionality.
-                            break;
-                        case 3:
-                            GoToCallKeyPage();
-                            break;
-                        default:
-                            DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");
-                            return;
-                    }
+                    BringUserToAuthorizedSection(EnteredCode.Text, user,res);
                 }
                 else
                 {
@@ -60,7 +44,8 @@ namespace Mobeye
                     if (successfullRegister(user))
                     {
                         UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
-                        UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
+                        BringUserToAuthorizedSection(_user.PrivateKey, user);
+                        //UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
                     }
                     else
                     {
@@ -84,6 +69,33 @@ namespace Mobeye
                 return true;
             }
             return false;
+        }
+        private void BringUserToAuthorizedSection(string code, User user, UserModel res = null)
+        {
+            if (res == null)
+            {
+                res = user.LogInWithPrivateKey(EnteredCode.Text);
+            }
+            if (res != null)
+            {
+                authLoad.IsRunning = false;
+                switch (res.PermissionLevel)
+                {
+                    case 1:
+                        openTestSite();
+                        break;
+                    case 2:
+                        DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
+                        //TODO: add actual functionality.
+                        break;
+                    case 3:
+                        GoToCallKeyPage();
+                        break;
+                    default:
+                        DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");
+                        return;
+                }
+            }
         }
     }
 }

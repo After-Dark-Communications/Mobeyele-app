@@ -22,7 +22,6 @@ namespace Mobeye.Logic
             {
                 return null;
             }
-            return "";
         }
     }
 }

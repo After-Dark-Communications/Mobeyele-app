@@ -7,7 +7,7 @@ namespace Mobeye.Logic
 {
     public class User
     {
-        private readonly UserConfirmation _user;
+        private UserConfirmation _user;
         private readonly IDevice _device;
         public User()
         {
@@ -47,6 +47,7 @@ namespace Mobeye.Logic
             //pass username + password to API
             //API returns UserModel or null
             //return UserModel
+            _user = _user==null ? new UserConfirmation() : _user;
             UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier()).Result;
 
             if (user != null)

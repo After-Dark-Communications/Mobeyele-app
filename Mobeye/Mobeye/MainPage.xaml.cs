@@ -66,9 +66,17 @@ namespace Mobeye
             NetworkAccess netStatus = Connectivity.NetworkAccess;
             if (netStatus == NetworkAccess.Internet)
             {
+#if DEBUG
+                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
+#else
                 using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
+#endif
                 {
-                    await Navigation.PushAsync(new ContactPersonLogin());
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await Navigation.PushAsync(new ContactPersonLogin());
+                    }
+                    //return error message
                 }
                 webload.IsRunning = false;
             }
