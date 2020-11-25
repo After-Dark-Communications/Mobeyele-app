@@ -36,11 +36,10 @@ namespace Mobeye
                 UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
                 if (res != null)
                 {
-                    BringUserToAuthorizedSection(EnteredCode.Text, user,res);
+                    BringUserToAuthorizedSection(EnteredCode.Text, user, res);
                 }
                 else
                 {
-                    authLoad.IsRunning = false;
                     if (successfullRegister(user))
                     {
                         UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
@@ -74,7 +73,7 @@ namespace Mobeye
         {
             if (res == null)
             {
-                res = user.LogInWithPrivateKey(EnteredCode.Text);
+                res = user.LogInWithPrivateKey(code);
             }
             if (res != null)
             {
@@ -93,9 +92,16 @@ namespace Mobeye
                         break;
                     default:
                         DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");
+                        EnteredCode.Text = "";
                         return;
                 }
             }
+            else
+            {
+                DisplayAlert("Couldn't Authorize", "We were unable to authorize you.", "OK");
+                EnteredCode.Text = "";
+            }
+            authLoad.IsRunning = false;
         }
     }
 }

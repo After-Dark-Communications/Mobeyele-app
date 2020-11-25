@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define DEBUG
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -47,10 +48,12 @@ namespace Mobeye
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     await DisplayAlert("success", contents, "OK");
+                    response.Dispose();
                 }
                 else
                 {
                     await DisplayAlert("failed", response.ReasonPhrase, "OK");
+                    response.Dispose();
                 }
             }
             webload.IsRunning = false;
@@ -74,6 +77,7 @@ namespace Mobeye
                 {
                     if (response.IsSuccessStatusCode)
                     {
+                        response.Dispose();
                         await Navigation.PushAsync(new ContactPersonLogin());
                     }
                     //return error message

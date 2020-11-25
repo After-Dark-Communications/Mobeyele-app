@@ -17,6 +17,7 @@ namespace Mobeye.API
             if (response.IsSuccessStatusCode)
             {
                 notification = await response.Content.ReadAsAsync<NotificationModel>();
+                response.Dispose();
             }
             return notification;
         }

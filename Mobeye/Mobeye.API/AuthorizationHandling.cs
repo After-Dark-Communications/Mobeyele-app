@@ -14,8 +14,10 @@ namespace Mobeye.API
             HttpResponseMessage response = await APIHelper.API.PostAsJsonAsync("", authCode);
             if(response.IsSuccessStatusCode)
             {
+                response.Dispose();
                 return true;
             }
+            response.Dispose();
             return false; 
         }
     }

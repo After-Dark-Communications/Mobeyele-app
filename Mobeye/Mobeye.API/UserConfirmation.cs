@@ -1,3 +1,4 @@
+#define DEBUG
 using Mobeye.Dependency;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,20 +25,25 @@ namespace Mobeye.API
                 if (response.IsSuccessStatusCode)
                 {
                     user = await response.Content.ReadAsAsync<UserModel>();
+                    response.Dispose();
                     return user;
                 }
             }
             return user;
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
-        public async Task<string> RegisterUser(string Imei, string regCode)
+        public string RegisterUser(string Imei, string regCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             //TODO: fix json 
             string contentString = string.Empty;
 
             //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/users?Imei="+Imei+"&SmsKey="+regCode))
+#if DEBUG
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("users?Imei=" + Imei + "&SmsKey=" + regCode).Result)
+#else
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("api/users?Imei="+Imei+"&SmsKey="+regCode).Result)
+#endif
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,22 +51,32 @@ namespace Mobeye.API
                     JArray contents = JArray.Parse(resp);
                     if (contents.Count > 0)
                     {
-                    contentString =  response.Content.ReadAsStringAsync().Result;
-                    return contentString;
+                        UserModel tempU = JsonToUser(response);
+                        contentString = tempU.PrivateKey;
+                        response.Dispose();
+                        return contentString;
                     }
                 }
+                response.Dispose();
                 return response.StatusCode.ToString();
             }
         }
-        public async Task<UserModel> LoginUser(string Imei, string privateKey)
+        public UserModel LoginUser(string Imei, string privateKey)
         {
             UserModel user = new UserModel();
             string contentString = string.Empty;
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/auth/" + Imei + privateKey))
+#if DEBUG
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("users?Imei=" + Imei + "&PrivateKey=" + privateKey).Result)
+
+#else
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("api/"users?Imei=" + Imei + "&PrivateKey=" + privateKey).Result)
+#endif
+
             {
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    user = response.Content.ReadAsAsync<UserModel>().Result;
+                    user = JsonToUser(response);
+                    response.Dispose();
                     return user;
                 }
             }
@@ -68,7 +84,6 @@ namespace Mobeye.API
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
-            //TODO: fix deadlock
             //TODO: catch exception, if unable to connect to server/ no internet connection
             using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
             {
@@ -78,10 +93,12 @@ namespace Mobeye.API
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
                     UserModel res = new UserModel(obj["SmsKey"].ToString(),obj["Authcode"].ToString(),obj["name"].ToString(), obj["Imei"].ToString(), obj["Phonenumber"].ToString(),Convert.ToInt32(obj["Authlevel"]));
+                    response.Dispose();
                     return res;
                 }
                 else
                 {
+                    response.Dispose();
                     return null;
                 }
             }
@@ -115,24 +132,27 @@ namespace Mobeye.API
                     JObject content = JObject.FromObject(contents[0]);
                     if (content["Phonenumber"] != null)
                     {
+                        int Auth = Convert.ToInt32(content["PermissionLevel"].ToString());
+
                         UserModel res = new UserModel(
                             content["SmsKey"].ToString(),
                             content["PrivateKey"].ToString(),
                             content["Name"].ToString(),
                             content["Imei"].ToString(),
                             content["Phonenumber"].ToString(),
-                            Convert.ToInt32(content["Authlevel"]));
+                            Auth);//goes wrong TODO: fix 
                         return res;
                     }
                     else
                     {
+                        int Auth = Convert.ToInt32(content["PermissionLevel"]);
                         UserModel res = new UserModel(
                         content["SmsKey"].ToString(),
                         content["PrivateKey"].ToString(),
                         content["Name"].ToString(),
                         content["Imei"].ToString(),
                         content["Phonenumber"].ToString(),
-                        Convert.ToInt32(content["Authlevel"]));
+                        Auth);
                         return res;
                     }
                 }
