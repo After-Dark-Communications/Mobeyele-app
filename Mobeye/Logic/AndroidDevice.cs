@@ -19,8 +19,9 @@ namespace Mobeye.Logic
 
                 return manager.Imei;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }

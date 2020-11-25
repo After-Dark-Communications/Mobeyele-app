@@ -12,6 +12,7 @@ namespace Mobeye.Logic
         public User()
         {
             _user = new UserConfirmation();
+            _device = new AndroidDevice();
         }
         public User(string vendor)
         {
