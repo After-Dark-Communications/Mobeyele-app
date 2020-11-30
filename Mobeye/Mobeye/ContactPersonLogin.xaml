@@ -6,7 +6,7 @@
         <StackLayout>
             <Image Source="mobeyelogo.png" Margin="0,10,0,25"/>
 
-            <Entry Placeholder="Enter the code that you have received here" Margin="20,0" MaxLength="5" Keyboard="Numeric" x:Name="EnteredCode"  TextChanged="EnteredCode_TextChanged"/>
+            <Entry Placeholder="Enter the code that you have received here" Margin="20,0" MaxLength="5" Keyboard="Numeric" x:Name="EnteredCode" TextChanged="EnteredCode_TextChanged"/>
             <ActivityIndicator x:Name="authLoad" IsRunning="False"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -15,6 +16,8 @@ namespace Mobeye
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ContactPersonLogin : ContentPage
     {
+        TypeAssistant assistant;
+        private CancellationTokenSource throttleCts = new CancellationTokenSource();
         public ContactPersonLogin()
         {
             InitializeComponent();
@@ -28,6 +31,17 @@ namespace Mobeye
 
         internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
         {
+             Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
+            .ContinueWith(
+                delegate { AttemptLogin(); }, // Pass the changed text to the PerformSearch function
+                CancellationToken.None,
+                TaskContinuationOptions.OnlyOnRanToCompletion,
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void AttemptLogin()
+        {
+            //perhaps do 4 or 5 length check now
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
                 //TODO: fix usermodel
