@@ -14,16 +14,18 @@ namespace Mobeye
 {
     public partial class MainPage : ContentPage
     {
+        TypeAssistant assistant;
         public MainPage()
         {
             InitializeComponent();
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+            assistant = new TypeAssistant();
         }
 
         protected override void OnAppearing()
         {
             //TODO: check if user has internet connection. If so, check if user can connect with mobeye or whomever is the api provider
-            tryInternet();
+            TryInternet();
             base.OnAppearing();
         }
 
@@ -57,10 +59,10 @@ namespace Mobeye
         }
         async void Retry_Connection(object sender, EventArgs e)
         {
-            tryInternet();
+            TryInternet();
         }
 
-        private async void tryInternet()
+        private async void TryInternet()
         {
             webload.IsRunning = true;
             NetworkAccess netStatus = Connectivity.NetworkAccess;
