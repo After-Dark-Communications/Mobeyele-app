@@ -1,5 +1,6 @@
 ﻿using System;
 using Mobeye.Dependency;
+using Mobeye.API;
 
 namespace Mobeye.Logic
 {
@@ -7,6 +8,13 @@ namespace Mobeye.Logic
 	{
 		public string ID { get; set; }
 		public string Message { get; set; }
+
+		private NotificationHandling _notificationHandler;
+
+		public Notification()
+        {
+			_notificationHandler = new NotificationHandling();
+        }
 
 		public void PushToPhone(NotificationModel notification)
 		{
@@ -24,8 +32,9 @@ namespace Mobeye.Logic
             }
 		}
 
-		public bool ConfirmedNotification(NotificationModel notification)
+		public void ConfirmedNotification(string messageID, string identifier, bool status, string privateKey)
 		{
+			//_notificationHandler.ConfirmedNotification(messageID, identifier, status, privateKey);
 			throw new NotImplementedException();
 		}
 	}
