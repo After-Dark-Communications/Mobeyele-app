@@ -6,11 +6,15 @@ namespace Mobeye.Dependency
 {
     public class NotificationModel
     {
-        public string Authorization { get; set; }
-        public string devicename { get; set; }
-        public string devicelocation { get; set; }
-        public string alarmtext { get; set; }
-        public string value { get; set; }
-        //Property names are based on the POST example from Mobeye. Do not change these!
+        string Devicename { get; set; }
+        string Location { get; set; }
+        string Alarmtext { get; set; }
+        string SetReset { get; set; }
+        int Priority { get; set; }
+        DateTime TimeOfAlarm { get; set; }
+        string Value { get; set; }
+        string MessageID { get; set; }
+        string[] Recipients { get; set; }
+        bool Escalation { get; set; }
     }
 }

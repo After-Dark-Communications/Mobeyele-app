@@ -5,7 +5,7 @@ namespace Mobeye.Logic
 {
 	public class Notification
 	{
-		public int ID { get; set; }
+		public string ID { get; set; }
 		public string Message { get; set; }
 
 		public void PushToPhone(NotificationModel notification)
