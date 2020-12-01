@@ -24,30 +24,46 @@ namespace Mobeye
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
 
-        async void GoToCallKeyPage()
-        {
-            await Navigation.PushAsync(new CallKeyPage());
-        }
 
         internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-             Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
-            .ContinueWith(
-                delegate { AttemptLogin(); }, // Pass the changed text to the PerformSearch function
-                CancellationToken.None,
-                TaskContinuationOptions.OnlyOnRanToCompletion,
-                TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 1s
+           .ContinueWith(
+               delegate { AttemptLogin(); }, // Pass the changed text to the PerformSearch function
+               CancellationToken.None,
+               TaskContinuationOptions.OnlyOnRanToCompletion,
+               TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void EnteredCode_Completed(object sender, EventArgs e)
+        {
+            authLoad.IsRunning = true;
+            if (EnteredCode.Text.Length == 4)
+            {
+                User user = new User(Device.RuntimePlatform);
+                UserModel res = user.LogInWithPrivateKey(EnteredCode.Text); ;
+                BringUserToAuthorizedSection(EnteredCode.Text, user, res);
+            }
+            else if (EnteredCode.Text.Length >= 5)
+            {
+                AttemptLogin();
+            }
+            else
+            {
+                DisplayAlert("Too short", "The code you entered is too short, please verify that this is the correct code and try again.", "Ok");
+            }
         }
 
         private void AttemptLogin()
         {
             //perhaps do 4 or 5 length check now
+            authLoad.IsRunning = true;
             if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
             {
-                //TODO: fix usermodel
-                authLoad.IsRunning = true;
                 User user = new User(Device.RuntimePlatform);
-                UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
+                UserModel res = null;
+                res = user.LogInWithPrivateKey(EnteredCode.Text);
+
                 if (res != null)
                 {
                     BringUserToAuthorizedSection(EnteredCode.Text, user, res);
@@ -66,7 +82,9 @@ namespace Mobeye
                         EnteredCode.Text = "";
                     }
                 }
+
             }
+            authLoad.IsRunning = false;
         }
 
         private Task openTestSite()
@@ -117,5 +135,10 @@ namespace Mobeye
             }
             authLoad.IsRunning = false;
         }
+        async void GoToCallKeyPage()
+        {
+            await Navigation.PushAsync(new CallKeyPage());
+        }
+
     }
 }
