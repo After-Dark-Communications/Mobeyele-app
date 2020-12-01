@@ -4,6 +4,7 @@ using System.Text;
 using Android.Telephony;
 using Mobeye.Logic;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 [assembly: Dependency(typeof(AndroidDevice))]
 namespace Mobeye.Logic

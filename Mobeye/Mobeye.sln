@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.API", "Mobeye.API\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.Dependency", "Mobeye.Dependency\Mobeye.Dependency.csproj", "{F50107BC-ADF8-4BE2-AD49-83A11F300B1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobeye.Logic", "Logic\Mobeye.Logic.csproj", "{506578EF-7B05-41C9-8AC3-D68626AAD417}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobeye.Logic", "Logic\Mobeye.Logic.csproj", "{506578EF-7B05-41C9-8AC3-D68626AAD417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

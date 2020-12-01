@@ -130,12 +130,6 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials">
-      <Version>1.5.3.2</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Mobeye\Mobeye.csproj">
@@ -145,5 +139,13 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\mobeyelogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Essentials">
+      <Version>1.5.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms">
+      <Version>4.8.0.1687</Version>
+    </PackageReference>
   </ItemGroup>
 </Project>
