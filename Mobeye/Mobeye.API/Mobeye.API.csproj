@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -12,6 +13,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mobeye.Dependency\Mobeye.Dependency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Shared\key.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
