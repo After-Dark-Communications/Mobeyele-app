@@ -6,15 +6,15 @@ namespace Mobeye.Dependency
 {
     public class NotificationModel
     {
-        string Devicename { get; set; }
-        string Location { get; set; }
-        string Alarmtext { get; set; }
-        string SetReset { get; set; }
-        int Priority { get; set; }
-        DateTime TimeOfAlarm { get; set; }
-        string Value { get; set; }
-        string MessageID { get; set; }
-        string[] Recipients { get; set; }
-        bool Escalation { get; set; }
+        public string Devicename { get; set; }
+        public string Location { get; set; }
+        public string Alarmtext { get; set; }
+        public string SetReset { get; set; }
+        public int Priority { get; set; }
+        public DateTime TimeOfAlarm { get; set; }
+        public string Value { get; set; }
+        public string MessageID { get; set; }
+        public string[] Recipients { get; set; }
+        public bool Escalation { get; set; }
     }
 }

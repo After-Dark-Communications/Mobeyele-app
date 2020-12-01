@@ -10,7 +10,18 @@ namespace Mobeye.Logic
 
 		public void PushToPhone(NotificationModel notification)
 		{
-			throw new NotImplementedException();
+			ID = notification.MessageID;
+			Message = notification.Alarmtext;
+			if(notification.Priority > 0)
+            {
+				//alarm
+				//push notification
+            }
+            else
+            {
+				//alert
+				//push notification
+            }
 		}
 
 		public bool ConfirmedNotification(NotificationModel notification)
