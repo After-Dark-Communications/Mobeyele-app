@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Mobeye</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.Mobeye</string>
+	<string>com.afterdark.Mobeye</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
