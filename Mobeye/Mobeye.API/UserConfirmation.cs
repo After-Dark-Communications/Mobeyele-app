@@ -16,6 +16,19 @@ namespace Mobeye.API
         {
             throw new NotImplementedException();
         }
+        //Gets the Authorization level for the 
+        public async Task<List<DeviceModel>> GetUserDevices(UserModel user)
+        {
+            List<DeviceModel> devices = new List<DeviceModel>();
+            using(HttpResponseMessage response = await APIHelper.API.GetAsync(""+ user.Imei + user.PrivateKey)){
+                if(response.IsSuccessStatusCode)
+                {
+                    devices = await response.Content.ReadAsAsync<List<DeviceModel>>();
+                    return devices;
+                }
+            }
+            return devices;
+        }
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
