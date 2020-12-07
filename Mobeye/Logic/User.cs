@@ -2,6 +2,7 @@
 using Mobeye.Dependency;
 using Mobeye.API;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Mobeye.Logic
 {
@@ -40,7 +41,21 @@ namespace Mobeye.Logic
             {
                 privateKey = _user.RegisterUser(_device.GetIdentifier(), smsCode).Result;
             }
+
+            this.GetAuthorization(privateKey, _device.GetIdentifier());
             return privateKey;
+        }
+
+        public List<DeviceModel> GetAuthorization(string privateKey, string imei)
+        {
+            List<DeviceModel> devices = _user.GetAUthorization(privateKey, imei);
+
+
+            if (devices != null)
+            {
+                return devices;
+            }
+            return null;
         }
         public UserModel LogInWithPrivateKey(string privateKey)
         {
