@@ -1,7 +1,6 @@
 using Mobeye.Dependency;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -12,23 +11,12 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
+
         public async Task<bool> GetTelConfirmRequest(string tel)
         {
             throw new NotImplementedException();
         }
-        //Gets the Authorization level for the 
-        public async Task<List<DeviceModel>> GetUserDevices(UserModel user)
-        {
-            List<DeviceModel> devices = new List<DeviceModel>();
-            using(HttpResponseMessage response = await APIHelper.API.GetAsync(""+ user.Imei + user.PrivateKey)){
-                if(response.IsSuccessStatusCode)
-                {
-                    devices = await response.Content.ReadAsAsync<List<DeviceModel>>();
-                    return devices;
-                }
-            }
-            return devices;
-        }
+
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
@@ -77,6 +65,19 @@ namespace Mobeye.API
                 }
             }
             return user;
+        }
+        public async Task<List<DeviceModel>> GetAuthorization(string Imei, string Privatekey)
+        {
+            List<DeviceModel> devices = new List<DeviceModel>();
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync($"users?Imei={Imei}&PrivateKey={Privatekey}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    devices = response.Content.ReadAsAsync<List<DeviceModel>>().Result;
+                    return devices;
+                }
+                return devices;
+            }
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
