@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "273981731771",
+    "firebase_url": "https://mobeyele-b1ba8.firebaseio.com",
+    "project_id": "mobeyele-b1ba8",
+    "storage_bucket": "mobeyele-b1ba8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273981731771:android:495180dcab9e1dcc998a9e",
+        "android_client_info": {
+          "package_name": "com.afterdark.mobeye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273981731771-mtemt25vndl0h101gbgoegekef4sumku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAEKq1G4S55SqcucZoJL1jU0RB77iksN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273981731771-mtemt25vndl0h101gbgoegekef4sumku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
