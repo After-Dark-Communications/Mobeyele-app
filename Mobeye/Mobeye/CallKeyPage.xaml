@@ -8,7 +8,7 @@
         <StackLayout Margin="20">
             <Grid>
                 <Label FontSize="18" Margin="0,15,0,0" TextColor="#000" x:Name="OpeningLabel"></Label>
-                <Button x:Name="RefreshButton"  Text="Refresh List" Clicked="RefreshDoors" Margin="250,0,0,0"/>
+                <Button x:Name="RefreshButton"  Text="Refresh List" Clicked="Refresh_Clicked" Margin="250,0,0,0"/>
             </Grid>
             <ScrollView VerticalOptions="FillAndExpand" >
                 <StackLayout x:Name="DoorContainer">
