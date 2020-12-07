@@ -48,7 +48,7 @@ namespace Mobeye.Logic
 
         public List<DeviceModel> GetAuthorization(string privateKey, string imei)
         {
-            List<DeviceModel> devices = _user.GetAUthorization(privateKey, imei);
+            List<DeviceModel> devices = _user.GetAuthorization(privateKey, imei).Result;
 
 
             if (devices != null)
