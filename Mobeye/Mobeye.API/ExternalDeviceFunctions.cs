@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -13,7 +12,7 @@ namespace Mobeye.API
         public async Task<List<int>> GetUserDevicesId(UserModel user)
         {
             List<int> ids = new List<int>();
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("" + user.Imei + user.PrivateKey))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("" + user.Imei + user.PrivateKey))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -28,7 +27,7 @@ namespace Mobeye.API
         public async Task<List<DeviceModel>> GetUserDevicesTest(List<int> ids)
         {
             List<DeviceModel> devices = new List<DeviceModel>();
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync(""))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,14 +41,13 @@ namespace Mobeye.API
 
         public async Task<String> OpenDoor(UserModel model, int deviceid, string command)
         {
-            bool canitopen;
-            string contentString = string.Empty;
+            string contentString;
             dynamic device = new JObject();
             device.deviceid = deviceid;
             device.command = command;
 
             HttpContent deviceContent = new StringContent(JObject.FromObject(device));
-            using (HttpResponseMessage response = await APIHelper.API.PostAsync("api/auth/", deviceContent))
+            using (HttpResponseMessage response = await ApiHelper.Api.PostAsync("api/auth/", deviceContent))
             {
                 if (response.IsSuccessStatusCode)
                 {

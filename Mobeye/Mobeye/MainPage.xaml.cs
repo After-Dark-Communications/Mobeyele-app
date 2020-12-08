@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms;
@@ -23,24 +19,24 @@ namespace Mobeye
         protected override void OnAppearing()
         {
             //TODO: check if user has internet connection. If so, check if user can connect with mobeye or whomever is the api provider
-            tryInternet();
+            TryInternet();
             base.OnAppearing();
         }
 
-        async void OnPortalLoginClick(object sender, EventArgs e)
+        private async void OnPortalLoginClick(EventArgs e)
         {
             await Navigation.PushAsync(new PortalLogin());
         }
 
-        async void OnContactPersonLogin(object sender, EventArgs e)
+        private async void OnContactPersonLogin(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ContactPersonLogin());
         }
 
-        async void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(EventArgs e)
         {
             webload.IsRunning = true;
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("users/?SmsKey=72940"))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("users/?SmsKey=72940"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -55,20 +51,24 @@ namespace Mobeye
             }
             webload.IsRunning = false;
         }
-        async void Retry_Connection(object sender, EventArgs e)
+
+        private void Retry_Connection(object sender, EventArgs e)
         {
-            tryInternet();
+            TryInternet();
         }
 
-        private async void tryInternet()
+        private async void TryInternet()
         {
             webload.IsRunning = true;
             NetworkAccess netStatus = Connectivity.NetworkAccess;
             if (netStatus == NetworkAccess.Internet)
             {
-                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))
+                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))
                 {
-                    await Navigation.PushAsync(new ContactPersonLogin());
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await Navigation.PushAsync(new ContactPersonLogin());
+                    }
                 }
                 webload.IsRunning = false;
             }

@@ -1,7 +1,5 @@
 ﻿using Mobeye.Dependency;
-using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Mobeye.API
@@ -13,7 +11,7 @@ namespace Mobeye.API
         public async Task<NotificationModel> ReceiveNotification(string path)
         {
             NotificationModel notification = null;
-            HttpResponseMessage response = await APIHelper.API.GetAsync(path);
+            HttpResponseMessage response = await ApiHelper.Api.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
                 notification = await response.Content.ReadAsAsync<NotificationModel>();
