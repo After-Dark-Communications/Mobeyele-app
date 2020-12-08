@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Mobeye.API
 {
@@ -20,21 +21,46 @@ namespace Mobeye.API
                     return ids;
                 }
             }
+
             return ids;
         }
+
         public async Task<List<DeviceModel>> GetUserDevicesTest(List<int> ids)
         {
             List<DeviceModel> devices = new List<DeviceModel>();
             using (HttpResponseMessage response = await APIHelper.API.GetAsync(""))
             {
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     devices = response.Content.ReadAsAsync<List<DeviceModel>>().Result;
                     return devices;
                 }
+
                 return devices;
             }
         }
-        //GetUserDevices(GetUserDevicesID(user))
+
+        public async Task<String> OpenDoor(UserModel model, int deviceid, string command)
+        {
+            bool canitopen;
+            string contentString = string.Empty;
+            dynamic device = new JObject();
+            device.deviceid = deviceid;
+            device.command = command;
+
+            HttpContent deviceContent = new StringContent(JObject.FromObject(device));
+            using (HttpResponseMessage response = await APIHelper.API.PostAsync("api/auth/", deviceContent))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    contentString = response.Content.ReadAsStringAsync().Result;
+                    return contentString;
+                }
+
+                return response.StatusCode.ToString();
+            }
+
+            //GetUserDevices(GetUserDevicesID(user))
+        }
     }
 }
