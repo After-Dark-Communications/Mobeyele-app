@@ -30,14 +30,14 @@ namespace Mobeye.API
             return user;
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
-        public async Task<string> RegisterUser(string Imei, string regCode)
+        public string RegisterUser(string Imei, string regCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             //TODO: fix json 
             string contentString = string.Empty;
 
             //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/users?Imei="+Imei+"&SmsKey="+regCode))
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("users?Imei="+Imei+"&SmsKey="+regCode).Result)
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,26 +45,21 @@ namespace Mobeye.API
                     JArray contents = JArray.Parse(resp);
                     if (contents.Count > 0)
                     {
-                    contentString =  response.Content.ReadAsStringAsync().Result;
+                        contentString = (string)contents[0]["PrivateKey"];
                     return contentString;
                     }
                 }
                 return response.StatusCode.ToString();
             }
         }
-        public async Task<UserModel> LoginUser(string Imei, string privateKey)
+        public UserModel LoginUser(string privateKey, string Imei)
         {
             UserModel user = new UserModel();
             string contentString = string.Empty;
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("api/auth/" + Imei + privateKey))
+            using (HttpResponseMessage response = APIHelper.API.GetAsync("users?Imei=" + Imei + "&PrivateKey=" + privateKey).Result)
             {
-                if(response.IsSuccessStatusCode)
-                {
-                    user = response.Content.ReadAsAsync<UserModel>().Result;
-                    return user;
-                }
+                return JsonToUser(response);
             }
-            return user;
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {

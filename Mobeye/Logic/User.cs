@@ -39,7 +39,7 @@ namespace Mobeye.Logic
             string privateKey = "";
             if (_device != null)
             {
-                privateKey = _user.RegisterUser(_device.GetIdentifier(), smsCode).Result;
+                privateKey = _user.RegisterUser(_device.GetIdentifier(), smsCode);
             }
             return privateKey;
         }
@@ -49,7 +49,7 @@ namespace Mobeye.Logic
             //API returns UserModel or null
             //return UserModel
             _user = _user==null ? new UserConfirmation() : _user;
-            UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier()).Result;
+            UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier());
 
             if (user != null)
             {

@@ -22,7 +22,7 @@ namespace Mobeye.Logic
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return "000000000000000";
             }
         }
     }
