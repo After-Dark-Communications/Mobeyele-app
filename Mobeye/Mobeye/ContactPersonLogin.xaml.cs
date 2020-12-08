@@ -31,41 +31,46 @@ namespace Mobeye
 
         internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-             Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
-            .ContinueWith(
-                delegate { AttemptLogin(); }, // Pass the changed text to the PerformSearch function
-                CancellationToken.None,
-                TaskContinuationOptions.OnlyOnRanToCompletion,
-                TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
+           .ContinueWith(
+               delegate
+               {
+                   if (EnteredCode.Text.Length >= 4) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
+                   else if (EnteredCode.Text.Length >= EnteredCode.MaxLength) { AttemptLogin(); } //perform regular login
+                   else { validateButton.IsVisible = false; }//hide login button
+               },
+               CancellationToken.None,
+               TaskContinuationOptions.OnlyOnRanToCompletion,
+               TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void validateButton_Clicked(object sender, EventArgs e)
+        {
+            AttemptLogin();
         }
 
         private void AttemptLogin()
         {
-            //perhaps do 4 or 5 length check now
-            if (EnteredCode.Text.Length >= EnteredCode.MaxLength)
+            authLoad.IsRunning = true;
+            User user = new User(Device.RuntimePlatform);
+            UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
+            if (res != null)
             {
-                //TODO: fix usermodel
-                authLoad.IsRunning = true;
-                User user = new User(Device.RuntimePlatform);
-                UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
-                if (res != null)
+                BringUserToAuthorizedSection(EnteredCode.Text, user, res);
+            }
+            else
+            {
+                authLoad.IsRunning = false;
+                if (successfullRegister(user))
                 {
-                    BringUserToAuthorizedSection(EnteredCode.Text, user, res);
+                    UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
+                    BringUserToAuthorizedSection(_user.PrivateKey, user);
+                    //UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
                 }
                 else
                 {
-                    authLoad.IsRunning = false;
-                    if (successfullRegister(user))
-                    {
-                        UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
-                        BringUserToAuthorizedSection(_user.PrivateKey, user);
-                        //UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
-                    }
-                    else
-                    {
-                        DisplayAlert("Wrong code", "We could not verify the code \"" + EnteredCode.Text + "\" to be correct", "Ok");
-                        EnteredCode.Text = "";
-                    }
+                    DisplayAlert("Wrong code", "We could not verify the code \"" + EnteredCode.Text + "\" to be correct", "Ok");
+                    EnteredCode.Text = "";
                 }
             }
         }
@@ -88,7 +93,7 @@ namespace Mobeye
         {
             if (res == null)
             {
-                res = user.LogInWithPrivateKey(EnteredCode.Text);
+                res = user.LogInWithPrivateKey(code);
             }
             if (res != null)
             {
@@ -110,6 +115,11 @@ namespace Mobeye
                         return;
                 }
             }
+            else
+            {
+                DisplayAlert("Login failed", "We were unable to log you in, please try again later or contact the one who provided the code", "OK");
+            }
         }
+
     }
 }
