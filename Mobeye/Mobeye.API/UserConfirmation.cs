@@ -116,7 +116,7 @@ namespace Mobeye.API
                             content["Name"].ToString(),
                             content["Imei"].ToString(),
                             content["Phonenumber"].ToString(),
-                            Convert.ToInt32(content["Authlevel"]));
+                            Convert.ToInt32(content["PermissionLevel"]));
                         return res;
                     }
                     else
@@ -127,7 +127,7 @@ namespace Mobeye.API
                         content["Name"].ToString(),
                         content["Imei"].ToString(),
                         content["Phonenumber"].ToString(),
-                        Convert.ToInt32(content["Authlevel"]));
+                        Convert.ToInt32(content["PermissionLevel"]));
                         return res;
                     }
                 }

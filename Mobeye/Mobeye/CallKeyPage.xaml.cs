@@ -109,7 +109,7 @@ namespace Mobeye
         private List<string> GetAccessableDoors()
         {
             List<string> temp = new List<string>();
-            for (int i = 1; i < 14; i++)
+            for (int i = 1; i < 3; i++)
             {
                 temp.Add("Door" + i);
             }
