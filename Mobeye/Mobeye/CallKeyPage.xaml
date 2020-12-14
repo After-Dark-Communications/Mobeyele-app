@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobeye.CallKeyPage"
+             Title="Accessible CallKeys"  BackgroundColor="{StaticResource page_background}">
+
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Grid>
+                <Label FontSize="18" Margin="0,15,0,0" TextColor="#000" x:Name="OpeningLabel"></Label>
+                <Button x:Name="RefreshButton"  Text="Refresh List" Clicked="RefreshDoors" Margin="250,0,0,0"/>
+            </Grid>
+            <ScrollView VerticalOptions="FillAndExpand" >
+                <StackLayout x:Name="DoorContainer">
+                    <!--Doors go here-->
+                    <Frame CornerRadius="5" Padding="20,20,20,10" BackgroundColor="#E5F5F5F5">
+                        <Grid>
+                            <Label FontAttributes="Bold" FontSize="18" TextColor="#080808">Name:</Label>
+                            <Label FontSize="18" Margin="60,0,0,0" TextColor="#000">Door1</Label>
+                            <Button Margin="0,30,0,0" Text="OPEN" Clicked="Button_Clicked"/>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
