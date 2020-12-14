@@ -35,8 +35,8 @@ namespace Mobeye
            .ContinueWith(
                delegate
                {
-                   if (EnteredCode.Text.Length >= 4) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
-                   else if (EnteredCode.Text.Length >= EnteredCode.MaxLength) { AttemptLogin(); } //perform regular login
+                   if (EnteredCode.Text.Length >= 5) { AttemptLogin(); } //perform regular login
+                   else if (EnteredCode.Text.Length >= 4) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
                    else { validateButton.IsVisible = false; }//hide login button
                },
                CancellationToken.None,
