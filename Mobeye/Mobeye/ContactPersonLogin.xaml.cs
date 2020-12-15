@@ -1,9 +1,6 @@
 ﻿using Mobeye.Dependency;
 using Mobeye.Logic;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -16,7 +13,6 @@ namespace Mobeye
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ContactPersonLogin : ContentPage
     {
-        TypeAssistant assistant;
         private CancellationTokenSource throttleCts = new CancellationTokenSource();
         public ContactPersonLogin()
         {
@@ -24,9 +20,9 @@ namespace Mobeye
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
 
-        async void GoToCallKeyPage()
+        async void GoToCallKeyPage(UserModel model)
         {
-            await Navigation.PushAsync(new CallKeyPage());
+            await Navigation.PushAsync(new CallKeyPage(model));
         }
 
         internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,7 +61,6 @@ namespace Mobeye
                 {
                     UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
                     BringUserToAuthorizedSection(_user.PrivateKey, user);
-                    //UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
                 }
                 else
                 {
@@ -108,7 +103,7 @@ namespace Mobeye
                         //TODO: add actual functionality.
                         break;
                     case 3:
-                        GoToCallKeyPage();
+                        GoToCallKeyPage(res);
                         break;
                     default:
                         DisplayAlert("Unauthorized", "You are not authorized to access any of these functions with the provided code. If you believe this to be wrong, please contact your code provider and try again.", "OK");

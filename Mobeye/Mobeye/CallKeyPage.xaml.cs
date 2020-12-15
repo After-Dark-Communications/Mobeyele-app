@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobeye.Dependency;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,24 +14,28 @@ namespace Mobeye
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CallKeyPage : ContentPage
     {
+        private readonly UserModel usermodel;
         public CallKeyPage()
         {
             InitializeComponent();
-
+            usermodel = new UserModel();
             this.BindingContext = GetAccessableDoors();
             RefreshDoors();
         }
-        private async void Button_Clicked(object sender, EventArgs e)
+
+        public CallKeyPage(UserModel usermodel)
         {
-            await MockOpenDoor("Door1");
+            InitializeComponent();
+            this.usermodel = (usermodel == null) ? new UserModel(): usermodel;
+            this.BindingContext = GetAccessableDoors();
+            RefreshDoors();
         }
 
-        private async void Refresh_Clicked(object send,EventArgs e)
+        private async void Refresh_Clicked(object send, EventArgs e)
         {
             RefreshDoors();
         }
 
-        //either per timeframe, when the user logs in or when the app is re-opened
         public void RefreshDoors()
         {
             //TODO: call api to check for new doors
@@ -42,14 +47,19 @@ namespace Mobeye
             }
         }
 
-        private async Task MockOpenDoor(string Doorname)
+        private async Task OpenDoor(string Doorname, Button button)
         {
-            try
+            //TODO: make call to open requested door.
+            bool opened = false;
+            int attempts = 0;
+            button.Text = "Opening...";
+            button.IsEnabled = false;
+            while (!opened && attempts < 3)
             {
-                //ShowProgresBar("Loading...");
+                //TODO: check if positive response message from requested door.
+                //make opened true if so.
                 OpeningLabel.Text = $"Opening \"{Doorname}\"";
-
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i <= 3; ++i)
                 {
                     await Task.Run(() =>
                     {
@@ -57,14 +67,21 @@ namespace Mobeye
                     });
                     OpeningLabel.Text += ".";
                 }
-                OpeningLabel.Text = $"Opened Door \"{Doorname}\"";
-
+                attempts++;
             }
-            catch (Exception ex)
+            if (opened)
             {
-
+                OpeningLabel.Text = $"Opened Door \"{Doorname}\"";
+                button.Text = "Opened";
+                await Task.Run(() => { return Task.Delay(1500); });
             }
-            //OpeningLabel.IsVisible = false;
+            else
+            {
+                await DisplayAlert("Unable to open door", $"We were unable to open door \"{Doorname}\". Please check your internet connection and try again later.", "OK");
+                OpeningLabel.Text = $"Failed to open \"{Doorname}\"";
+            }
+            button.Text = "Open";
+            button.IsEnabled = true;
         }
 
         private Frame CreateNewDoorItem(string name)
@@ -97,8 +114,7 @@ namespace Mobeye
                 Text = "Open",
 
             };
-            //TODO: add button clicked event to mockopendoor
-            button.Clicked += async (sender, args) => await MockOpenDoor(name);
+            button.Clicked += async (sender, args) => await OpenDoor(name, button);
             grid.Children.Add(nameLabel);
             grid.Children.Add(doorLabel);
             grid.Children.Add(button);
@@ -116,5 +132,5 @@ namespace Mobeye
             return temp;
         }
 
-    }//different part
+    }
 }
