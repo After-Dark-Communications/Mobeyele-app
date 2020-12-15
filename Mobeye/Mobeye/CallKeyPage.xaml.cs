@@ -18,17 +18,22 @@ namespace Mobeye
             InitializeComponent();
 
             this.BindingContext = GetAccessableDoors();
+            RefreshDoors();
         }
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await MockOpenDoor("Door1");
+        }
+
+        private async void Refresh_Clicked(object send,EventArgs e)
+        {
+            RefreshDoors();
+        }
+
         //either per timeframe, when the user logs in or when the app is re-opened
-        //do we have that in the questions doc?
-        public async void LoadAccessableDoors()
+        public void RefreshDoors()
         {
-            //create new container for every door.
-
-        }
-
-        public void RefreshDoors(object sender, EventArgs e)
-        {
+            //TODO: call api to check for new doors
             List<string> Doors = GetAccessableDoors();
             DoorContainer.Children.Clear();
             for (int i = 0; i < Doors.Count; i++)
@@ -39,18 +44,6 @@ namespace Mobeye
 
         private async Task MockOpenDoor(string Doorname)
         {
-
-            //OpeningLabel.IsVisible = true;
-            //TODO: add text "Opening door 'X'..." with increasing elipses
-            //OpeningLabel.Text = $"Opening \"{Doorname}\"";
-            //await Task.Delay(sleepTime);
-            //OpeningLabel.Text += ".";
-            //await Task.Delay(sleepTime);
-            //OpeningLabel.Text += ".";
-            //await Task.Delay(sleepTime);
-            //OpeningLabel.Text += ".";
-            //await Task.Delay(sleepTime);
-            //OpeningLabel.Text = "";
             try
             {
                 //ShowProgresBar("Loading...");
@@ -105,7 +98,7 @@ namespace Mobeye
 
             };
             //TODO: add button clicked event to mockopendoor
-            //button.Clicked += Button_Clicked;
+            button.Clicked += async (sender, args) => await MockOpenDoor(name);
             grid.Children.Add(nameLabel);
             grid.Children.Add(doorLabel);
             grid.Children.Add(button);
@@ -123,9 +116,5 @@ namespace Mobeye
             return temp;
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            await MockOpenDoor("Door1");
-        }
     }//different part
 }

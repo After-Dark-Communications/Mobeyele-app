@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms;
@@ -10,10 +14,12 @@ namespace Mobeye
 {
     public partial class MainPage : ContentPage
     {
+        TypeAssistant assistant;
         public MainPage()
         {
             InitializeComponent();
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+            assistant = new TypeAssistant();
         }
 
         protected override void OnAppearing()
@@ -23,20 +29,20 @@ namespace Mobeye
             base.OnAppearing();
         }
 
-        private async void OnPortalLoginClick(EventArgs e)
+        async void OnPortalLoginClick(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new PortalLogin());
         }
 
-        private async void OnContactPersonLogin(object sender, EventArgs e)
+        async void OnContactPersonLogin(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ContactPersonLogin());
         }
 
-        private async void Button_Clicked(EventArgs e)
+        async void Button_Clicked(object sender, EventArgs e)
         {
             webload.IsRunning = true;
-            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("users/?SmsKey=72940"))
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync("users/?SmsKey=72940"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -51,8 +57,7 @@ namespace Mobeye
             }
             webload.IsRunning = false;
         }
-
-        private void Retry_Connection(object sender, EventArgs e)
+        async void Retry_Connection(object sender, EventArgs e)
         {
             TryInternet();
         }
@@ -63,12 +68,17 @@ namespace Mobeye
             NetworkAccess netStatus = Connectivity.NetworkAccess;
             if (netStatus == NetworkAccess.Internet)
             {
-                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))
+#if DEBUG
+                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
+#else
+                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
+#endif
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         await Navigation.PushAsync(new ContactPersonLogin());
                     }
+                    //return error message
                 }
                 webload.IsRunning = false;
             }

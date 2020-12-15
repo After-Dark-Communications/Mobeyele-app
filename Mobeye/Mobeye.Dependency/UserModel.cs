@@ -17,11 +17,12 @@ namespace Mobeye.Dependency
         {
 
         }
-        public UserModel(string smskey, string privatekey, string name, string phonenumber,int permissionlevel)
+        public UserModel(string smskey, string privatekey, string name,string Imei, string phonenumber,int permissionlevel)
         {
             this.SmsKey = smskey;
             this.PrivateKey = privatekey;
             this.Name = name;
+            this.Imei = Imei;
             this.Phonenumber = phonenumber;
             this.PermissionLevel = permissionlevel;
         }
