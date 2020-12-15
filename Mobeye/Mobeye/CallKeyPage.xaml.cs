@@ -1,11 +1,7 @@
 ﻿using Mobeye.Dependency;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -49,6 +45,7 @@ namespace Mobeye
 
         private async Task OpenDoor(string Doorname, Button button)
         {
+            //TODO: fix multiple door visual bug
             //TODO: make call to open requested door.
             bool opened = false;
             int attempts = 0;
@@ -112,7 +109,6 @@ namespace Mobeye
             {
                 Margin = new Thickness(0, 30, 0, 0),
                 Text = "Open",
-
             };
             button.Clicked += async (sender, args) => await OpenDoor(name, button);
             grid.Children.Add(nameLabel);

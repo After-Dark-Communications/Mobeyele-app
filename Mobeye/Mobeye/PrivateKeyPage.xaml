@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobeye.PrivateKeyPage"
+             Title="Private Key" BackgroundColor="{StaticResource page_background}"> 
+    
+    <ContentPage.Content>
+        <StackLayout Margin="10,0" Orientation="Vertical">
+            <Label Text="Your private Key is:" HorizontalOptions="CenterAndExpand" Padding="0,150,0,0" TextColor="Black" FontSize="Title"/>
+            <Button Margin="60,30,60,0" Text="Reveal Key" Clicked="RevealCodeButton_Clicked" x:Name="RevealCodeButton" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
+            <Label Text="1234" HorizontalTextAlignment="Center" Margin="0,30,0,0" TextColor="Black" FontSize="Large" FontAttributes="Bold" x:Name="PrivateKey" IsVisible="False"/>
+            <Label Text="Keep this code private, as it gives you and anyone who has it your priviliges." HorizontalOptions="CenterAndExpand" Padding="0,10,0,0" TextColor="Black" FontSize="Title" HorizontalTextAlignment="Center"/>
+            <Button Margin="60,80,60,0" Text="OK" Clicked="ContinueButton_Clicked" x:Name="ContinueButton" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
+            <Label Text="If you ever lose this key, be sure to request a replacement as soon as possible." HorizontalOptions="CenterAndExpand" Padding="100,0" TextColor="Black" FontSize="Caption" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

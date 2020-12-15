@@ -25,6 +25,11 @@ namespace Mobeye
             await Navigation.PushAsync(new CallKeyPage(model));
         }
 
+        async void GoToPrivateKeyPage(string privateKey)
+        {
+            await Navigation.PushAsync(new PrivateKeyPage(privateKey));
+        }
+
         internal void EnteredCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
@@ -60,7 +65,7 @@ namespace Mobeye
                 if (successfullRegister(user))
                 {
                     UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
-                    BringUserToAuthorizedSection(_user.PrivateKey, user);
+                    GoToPrivateKeyPage(_user.PrivateKey);
                 }
                 else
                 {
