@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Mobeye.Logic;
+﻿using Mobeye.Logic;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidDevice))]

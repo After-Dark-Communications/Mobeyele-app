@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobeye.Logic
+﻿namespace Mobeye.Logic
 {
-    public class IOSDevice : IDevice
+    public class IosDevice : IDevice
     {
         public string GetIdentifier()
         {

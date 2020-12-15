@@ -63,7 +63,7 @@ namespace Mobeye
                 authLoad.IsRunning = false;
                 if (successfullRegister(user))
                 {
-                    UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
+                    UserModel _user = user.CreateMinimalUm(EnteredCode.Text, user.Register(EnteredCode.Text));
                     BringUserToAuthorizedSection(_user.PrivateKey, user);
                     //UserModel _user = new UserModel(EnteredCode.Text,user.Register(EnteredCode.Text),"","","",2);
                 }

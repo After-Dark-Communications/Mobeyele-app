@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Mobeye.Dependency
 {
@@ -17,12 +15,12 @@ namespace Mobeye.Dependency
         {
 
         }
-        public UserModel(string smskey, string privatekey, string name,string Imei, string phonenumber,int permissionlevel)
+        public UserModel(string smskey, string privatekey, string name,string imei, string phonenumber,int permissionlevel)
         {
             this.SmsKey = smskey;
             this.PrivateKey = privatekey;
             this.Name = name;
-            this.Imei = Imei;
+            this.Imei = imei;
             this.Phonenumber = phonenumber;
             this.PermissionLevel = permissionlevel;
         }
