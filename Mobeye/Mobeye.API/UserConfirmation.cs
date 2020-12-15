@@ -61,6 +61,18 @@ namespace Mobeye.API
                 return JsonToUser(response);
             }
         }
+        public void CreateAuthorizationCode(string code, string privatekey)
+        {
+            HttpContent authcode = new StringContent("code");
+            try
+            {
+                HttpResponseMessage response = APIHelper.API.PostAsync("users?Privatekey=" + privatekey, authcode).Result;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }    
+        }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
             //TODO: fix deadlock
