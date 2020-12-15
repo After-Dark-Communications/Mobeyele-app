@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mobeye.Dependency
+﻿namespace Mobeye.Dependency
 {
     public class DeviceModel
     {
