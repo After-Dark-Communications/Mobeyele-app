@@ -68,6 +68,16 @@ namespace Mobeye.Logic
             user.PermissionLevel = 999;
             return user;
         }
+
+        
+
+        public void CreateAuthorizationCode(string code, string privateKey)
+        {
+            //pass on the code to api
+            _user.CreateAuthorizationCode(code, privateKey);
+        }
+
+
         /*public bool LogIn(string authorizationCode)
         {
             throw new NotImplementedException();
