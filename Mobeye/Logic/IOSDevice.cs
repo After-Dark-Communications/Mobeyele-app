@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UIKit;//TODO: fix could not find error
 
 namespace Mobeye.Logic
 {
@@ -9,10 +8,11 @@ namespace Mobeye.Logic
     {
         public string GetIdentifier()
         {
-            var nsUid = UIDevice.CurrentDevice.IdentifierForVendor;
-            string guidElements = nsUid.AsString();
+            //var nsUid = UIDevice.CurrentDevice.IdentifierForVendor;
+            //string guidElements = nsUid.AsString();
 
-            return guidElements;
+            //return guidElements;
+            return "000000000000000";
         }
     }
 }

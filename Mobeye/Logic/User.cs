@@ -2,6 +2,7 @@
 using Mobeye.Dependency;
 using Mobeye.API;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Mobeye.Logic
 {
@@ -68,8 +69,16 @@ namespace Mobeye.Logic
             user.PermissionLevel = 999;
             return user;
         }
+        public List<DeviceModel> GetAuthorization(string privateKey, string imei)
+        {
+            List<DeviceModel> devices = _user.GetAuthorization(privateKey, imei).Result;
+            if (devices != null)
+            {
+                return devices;
+            }
+            return null;
+        }
 
-        
 
         public void CreateAuthorizationCode(string code, string privateKey)
         {

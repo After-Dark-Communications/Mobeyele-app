@@ -72,6 +72,19 @@ namespace Mobeye.API
                 throw e;
             }    
         }
+        public async Task<List<DeviceModel>> GetAuthorization(string imei, string privatekey)
+        {
+            List<DeviceModel> devices = new List<DeviceModel>();
+            using (HttpResponseMessage response = await APIHelper.API.GetAsync($"users?Imei={imei}&PrivateKey={privatekey}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    devices = response.Content.ReadAsAsync<List<DeviceModel>>().Result;
+                    return devices;
+                }
+                return devices;
+            }
+        }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
             //TODO: fix deadlock
