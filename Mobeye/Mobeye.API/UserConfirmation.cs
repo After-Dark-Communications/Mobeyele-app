@@ -30,7 +30,7 @@ namespace Mobeye.API
             string contentString;
 
             //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei="+imei+"&SmsKey="+regCode).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei=" + imei + "&SmsKey=" + regCode).Result)
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -39,7 +39,7 @@ namespace Mobeye.API
                     if (contents.Count > 0)
                     {
                         contentString = (string)contents[0]["PrivateKey"];
-                    return contentString;
+                        return contentString;
                     }
                 }
                 return response.StatusCode.ToString();
@@ -85,7 +85,7 @@ namespace Mobeye.API
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["SmsKey"]?.ToString(),obj["Authcode"]?.ToString(),obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(),Convert.ToInt32(obj["Authlevel"]));
+                    UserModel res = new UserModel(obj["SmsKey"]?.ToString(), obj["Authcode"]?.ToString(), obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(), Convert.ToInt32(obj["Authlevel"]));
                     return res;
                 }
                 else
@@ -121,28 +121,25 @@ namespace Mobeye.API
                 if (contents.Count > 0)//json always returns something if the request is valid, thus it can return an empty array
                 {
                     JObject content = JObject.FromObject(contents[0]);
-                    if (content["Phonenumber"] != null)
-                    {
-                        UserModel res = new UserModel(
-                            content["SmsKey"]?.ToString(),
-                            content["PrivateKey"]?.ToString(),
-                            content["Name"]?.ToString(),
-                            content["Imei"]?.ToString(),
-                            content["Phonenumber"].ToString(),
-                            Convert.ToInt32(content["PermissionLevel"]));
-                        return res;
-                    }
-                    else
-                    {
-                        UserModel res = new UserModel(
+#if DEBUG
+                    UserModel res = new UserModel(
                         content["SmsKey"]?.ToString(),
                         content["PrivateKey"]?.ToString(),
                         content["Name"]?.ToString(),
                         content["Imei"]?.ToString(),
-                        content["Phonenumber"]?.ToString(),
+                        content["Phonenumber"].ToString(),
                         Convert.ToInt32(content["PermissionLevel"]));
-                        return res;
-                    }
+                    return res;
+#else
+                    UserModel res = new UserModel(
+                        content["Code"]?.ToString(),
+                        content["privateKey"]?.ToString(),
+                        content["Name"]?.ToString(),
+                        content["phoneId"]?.ToString(),
+                        content["Phonenumber"].ToString(),
+                        Convert.ToInt32(content["UserRole"]));
+                    return res;
+#endif
                 }
             }
             return null;

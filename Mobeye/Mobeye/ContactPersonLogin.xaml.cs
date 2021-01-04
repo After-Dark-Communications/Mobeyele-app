@@ -64,7 +64,7 @@ namespace Mobeye
                 authLoad.IsRunning = false;
                 if (successfullRegister(user))
                 {
-                    UserModel _user = user.createMinimalUM(EnteredCode.Text, user.Register(EnteredCode.Text));
+                    UserModel _user = user.createMinimalUm(EnteredCode.Text, user.Register(EnteredCode.Text));
                     GoToPrivateKeyPage(_user.PrivateKey);
                 }
                 else

@@ -54,7 +54,7 @@ namespace Mobeye.Logic
             }
             return null;
         }
-        public UserModel CreateMinimalUm(string smsKey, string privateKey)
+        public UserModel createMinimalUm(string smsKey, string privateKey)
         {
             UserModel user = new UserModel();
             user.SmsKey = smsKey;
