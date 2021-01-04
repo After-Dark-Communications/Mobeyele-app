@@ -42,7 +42,7 @@ namespace Mobeye
         async void Button_Clicked(object sender, EventArgs e)
         {
             webload.IsRunning = true;
-            using (HttpResponseMessage response = await APIHelper.API.GetAsync("users/?SmsKey=72940"))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("users/?SmsKey=72940"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -69,7 +69,7 @@ namespace Mobeye
             if (netStatus == NetworkAccess.Internet)
             {
 #if DEBUG
-                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
+                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
 #else
                 using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
 #endif

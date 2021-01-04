@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Android.Telephony;
-using Mobeye.Logic;
+﻿using Mobeye.Logic;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidDevice))]
@@ -13,17 +9,17 @@ namespace Mobeye.Logic
         public string GetIdentifier()
         {
             
-            try
-            {
-                TelephonyManager manager = (TelephonyManager)Android.App.Application.Context.GetSystemService(Android.Content.Context.TelephonyService);
+            //try
+            //{
+            //    TelephonyManager manager = (TelephonyManager)Android.App.Application.Context.GetSystemService(Android.Content.Context.TelephonyService);
 
-                return manager.Imei;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+            //    return manager.Imei;
+            //}
+            //catch (Exception e)
+            //{
+                //Console.WriteLine(e.Message);
                 return "000000000000000";
-            }
+            //}
         }
     }
 }

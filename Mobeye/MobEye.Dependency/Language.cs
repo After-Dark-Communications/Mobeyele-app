@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobeye.Dependency
+﻿namespace Mobeye.Dependency
 {
     public enum Language
     {

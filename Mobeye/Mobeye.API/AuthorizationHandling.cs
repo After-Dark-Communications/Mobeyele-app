@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mobeye.API
@@ -11,7 +7,7 @@ namespace Mobeye.API
     {
         public async Task<bool> StoreAuthCode(string authCode)
         {
-            HttpResponseMessage response = await APIHelper.API.PostAsJsonAsync("", authCode);
+            HttpResponseMessage response = await ApiHelper.Api.PostAsJsonAsync("", authCode);
             if(response.IsSuccessStatusCode)
             {
                 return true;
