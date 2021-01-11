@@ -17,6 +17,9 @@ namespace Mobeye
             ApiHelper.InitaliazeClient(Device.RuntimePlatform);
             MainPage = new NavigationPage(new MainPage());
 
+            //Remove this method to stop OneSignal Debugging  
+            OneSignal.Current.SetLogLevel(LOG_LEVEL.VERBOSE, LOG_LEVEL.NONE);
+
             OneSignal.Current.StartInit("YOUR_ONESIGNAL_APP_ID")
             .Settings(new Dictionary<string, bool>() {
             { IOSSettings.kOSSettingsKeyAutoPrompt, false },
