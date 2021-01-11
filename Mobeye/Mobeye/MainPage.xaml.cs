@@ -9,6 +9,9 @@ using Xamarin.Forms;
 using System.Net.Http;
 using Mobeye.API;
 using Xamarin.Essentials;
+using Com.OneSignal;
+using Com.OneSignal.Abstractions;
+using Android;
 
 namespace Mobeye
 {

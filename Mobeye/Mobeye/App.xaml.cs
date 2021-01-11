@@ -20,7 +20,7 @@ namespace Mobeye
             //Remove this method to stop OneSignal Debugging  
             OneSignal.Current.SetLogLevel(LOG_LEVEL.VERBOSE, LOG_LEVEL.NONE);
 
-            OneSignal.Current.StartInit("YOUR_ONESIGNAL_APP_ID")
+            OneSignal.Current.StartInit("4426fab6-1d56-4a81-8224-d62d61f0ceb6")
             .Settings(new Dictionary<string, bool>() {
             { IOSSettings.kOSSettingsKeyAutoPrompt, false },
              { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
