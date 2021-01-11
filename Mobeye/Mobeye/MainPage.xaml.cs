@@ -71,7 +71,7 @@ namespace Mobeye
 #if DEBUG
                 using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
 #else
-                using (HttpResponseMessage response = await APIHelper.API.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
+                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
 #endif
                 {
                     if (response.IsSuccessStatusCode)

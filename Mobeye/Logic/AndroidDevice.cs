@@ -18,7 +18,7 @@ namespace Mobeye.Logic
             //catch (Exception e)
             //{
                 //Console.WriteLine(e.Message);
-                return "000000000000000";
+                return "aaaa1111";
             //}
         }
     }

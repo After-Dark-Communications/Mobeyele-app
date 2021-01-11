@@ -1,4 +1,5 @@
 using Mobeye.Dependency;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -27,30 +28,58 @@ namespace Mobeye.API
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             //TODO: fix json 
-            string contentString;
+            String contentString;
+
+            var data = new { 
+                PhoneId = imei,
+                Code =regCode 
+            };
+
+            var myContent = JsonConvert.SerializeObject(data);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
 
             //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei=" + imei + "&SmsKey=" + regCode).Result)
-            {
-                if (response.IsSuccessStatusCode)
+
+            try {
+                using (HttpResponseMessage response = ApiHelper.Api.PostAsync("/registerphone", byteContent).Result)
                 {
-                    string resp = response.Content.ReadAsStringAsync().Result;
-                    JArray contents = JArray.Parse(resp);
-                    if (contents.Count > 0)
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        contentString = (string)contents[0]["PrivateKey"];
-                        return contentString;
+                        string resp = response.Content.ReadAsStringAsync().Result;
+                        JArray contents = JArray.Parse(resp);
+                        if (contents.Count > 0)
+                        {
+                            contentString = (string)contents[0]["PrivateKey"];
+                            return contentString;
+                        }
                     }
+                    return response.StatusCode.ToString();
                 }
-                return response.StatusCode.ToString();
+            } catch (HttpRequestException e )
+            {
+                
             }
+            return null; 
         }
         public UserModel LoginUser(string privateKey, string imei)
         {
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei=" + imei + "&PrivateKey=" + privateKey).Result)
-            {
-                return JsonToUser(response);
-            }
+         //   try{
+                using (HttpResponseMessage response = ApiHelper.Api.GetAsync("/phoneauthorization"+"users?PhoneId=" + imei + "&PrivateKey=" + privateKey).Result)
+                {
+                
+                    return JsonToUser(response);
+                }
+        //    }
+        //    catch(Exception e)
+        //    { 
+        //        UserModel temp = new UserModel();
+        //        return temp;
+        //    }
+          
         }
         public bool CreateAuthorizationCode(string code, string privatekey)
         {
