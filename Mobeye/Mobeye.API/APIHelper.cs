@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -11,6 +12,10 @@ namespace Mobeye.API
 
         public static void InitaliazeClient(string runtimePlatform)
         {
+            string url = "https://www.api.mymobeye.com/api";
+            HttpWebRequest request = HttpWebRequest.CreateHttp(url);
+            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
             Api = new HttpClient();
 #if DEBUG
             Api.BaseAddress = new Uri("https://www.api.mymobeye.com/api");

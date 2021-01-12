@@ -3,13 +3,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Mobeye.API
 {
     public class UserConfirmation
     {
+
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
@@ -24,62 +27,66 @@ namespace Mobeye.API
             return user;
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
-        public string RegisterUser(string imei, string regCode)
+        public string RegisterUser(string imei, string smsCode)
         {
             //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
             //TODO: fix json 
             String contentString;
 
-            var data = new { 
+            var data = new
+            {
                 PhoneId = imei,
-                Code =regCode 
+                Code = smsCode
             };
-
             var myContent = JsonConvert.SerializeObject(data);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
+            Console.WriteLine(myContent);
 
-            //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-
-            try {
-                using (HttpResponseMessage response = ApiHelper.Api.PostAsync("/registerphone", byteContent).Result)
-                {
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string resp = response.Content.ReadAsStringAsync().Result;
-                        JArray contents = JArray.Parse(resp);
-                        if (contents.Count > 0)
-                        {
-                            contentString = (string)contents[0]["PrivateKey"];
-                            return contentString;
-                        }
-                    }
-                    return response.StatusCode.ToString();
-                }
-            } catch (HttpRequestException e )
+            //HttpResponseMessage response = ApiHelper.Api.PostAsync(url, byteContent).
+            try
             {
-                
+                var response = ApiHelper.Api.PostAsync("/registerphone", byteContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string resp = response.Content.ReadAsStringAsync().Result;
+
+                    JArray contents = JArray.Parse(resp);
+                    if (contents.Count > 0)
+                    {
+                        contentString = (string)contents[0]["PrivateKey"];
+                        return contentString;
+                    }
+                }
+                return response.StatusCode.ToString();
             }
-            return null; 
+            catch (Exception e)
+            {
+
+            }
+            return "nothing";
+
+
+
+
         }
         public UserModel LoginUser(string privateKey, string imei)
         {
-         //   try{
-                using (HttpResponseMessage response = ApiHelper.Api.GetAsync("/phoneauthorization"+"users?PhoneId=" + imei + "&PrivateKey=" + privateKey).Result)
-                {
-                
-                    return JsonToUser(response);
-                }
-        //    }
-        //    catch(Exception e)
-        //    { 
-        //        UserModel temp = new UserModel();
-        //        return temp;
-        //    }
-          
+            //   try{
+            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("/phoneauthorization" + "users?PhoneId=" + imei + "&PrivateKey=" + privateKey).Result)
+            {
+
+                return JsonToUser(response);
+            }
+            //    }
+            //    catch(Exception e)
+            //    { 
+            //        UserModel temp = new UserModel();
+            //        return temp;
+            //    }
+
         }
         public bool CreateAuthorizationCode(string code, string privatekey)
         {

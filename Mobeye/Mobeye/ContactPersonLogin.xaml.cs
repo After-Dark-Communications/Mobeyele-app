@@ -50,13 +50,13 @@ namespace Mobeye
             AttemptLogin();
         }
 
-        /* private void AttemptLogin()
-         {
-             authLoad.IsRunning = true;
-             User user = new User(Device.RuntimePlatform);
-             user.Register(EnteredCode.Text);
+        /*  private void AttemptLogin()
+          {
+              authLoad.IsRunning = true;
+              User user = new User(Device.RuntimePlatform);
+              user.Register(EnteredCode.Text);
 
-         }*/
+          }*/
 
         private void AttemptLogin()
         {
