@@ -18,6 +18,20 @@ namespace Mobeye.API
             }
             return notification;
         }
+        public string SendNotification(NotificationModel notification)
+        {
+            string msg = "";
+            HttpResponseMessage response = ApiHelper.Api.PostAsync();
+            if(response.IsSuccessStatusCode)
+            {
+                msg = "Notification sent!";
+            }
+            else
+            {
+                msg = "Notification failed to send";
+            }
+            return msg;
+        }
         public void ConvertJsonToNotification(string json)
         {
 
