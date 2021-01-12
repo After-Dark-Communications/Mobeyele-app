@@ -1,4 +1,5 @@
 ﻿using Mobeye.Dependency;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,15 +21,30 @@ namespace Mobeye.API
         }
         public string SendNotification(NotificationModel notification)
         {
+            string Url = "https://onesignal.com/api/v1/notifications";
             string msg = "";
-            HttpResponseMessage response = ApiHelper.Api.PostAsync();
-            if(response.IsSuccessStatusCode)
+            var data = new
             {
-                msg = "Notification sent!";
-            }
-            else
+                PhoneId = notification.PhoneId,
+                UniqueMessageId = notification.UniqueMessageId,
+                Response = notification.Response,
+                Privatekey = notification.PrivateKey
+            };
+            var myContent = JsonConvert.SerializeObject(data);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            using (HttpResponseMessage response = ApiHelper.Api.PostAsync(Url, byteContent).Result)
             {
-                msg = "Notification failed to send";
+                if (response.IsSuccessStatusCode)
+                {
+                    msg = "Notification sent!";
+                }
+                else
+                {
+                    msg = "Notification failed to send";
+                }
             }
             return msg;
         }
