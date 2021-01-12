@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobeye.NotificationResponse"
+             Title="Alert" BackgroundColor="{StaticResource page_background}">
+    
+    <ContentPage.Content>
+        <StackLayout Margin="0,35,0,0" x:Name="stackLayout">
+            <StackLayout Margin="10,0" Orientation="Vertical">
+                <Frame CornerRadius="5" Padding="20,20,20,10" BackgroundColor="#E5F5F5F5" Margin="0,50,0,0">
+                    <Grid>
+                        <Label FontAttributes="Bold" FontSize="18" TextColor="#080808">Alert:</Label>
+                        <Label FontSize="18" Margin="60,0,0,0" TextColor="#000" x:Name="AlertMessage">...</Label>
+                        <Button Margin="0,30,0,0" Text="OPEN" Clicked="Button_Clicked"/>
+                    </Grid>
+                </Frame>
+                <Label Text="-Insert message about having solved the problem here-" HorizontalOptions="CenterAndExpand" Padding="0,80,0,0" TextColor="Black" FontSize="Title" HorizontalTextAlignment="Center"/>
+                <Button Margin="60,80,60,0" Text="OK" Clicked="ContinueButton_Clicked"  x:Name="ContinueButton" BackgroundColor="{StaticResource button_background}" TextColor="{StaticResource button_text}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

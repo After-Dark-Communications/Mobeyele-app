@@ -76,8 +76,6 @@ namespace Mobeye.API
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
-            //TODO: fix deadlock
-            //TODO: catch exception, if unable to connect to server/ no internet connection
             using (HttpResponseMessage response = await ApiHelper.Api.GetAsync(""))
             {
                 if (response.IsSuccessStatusCode)
@@ -93,23 +91,6 @@ namespace Mobeye.API
                     return null;
                 }
             }
-            //try
-            //{
-            //    using (HttpResponseMessage response = await APIHelper.API.GetAsync("profile/?emailaddress=" + user.Email))
-            //    {
-            //        if (response.IsSuccessStatusCode)
-            //        { 
-            //            UserModel receivedUser = response.Content.ReadAsAsync<UserModel>().Result;
-            //            return receivedUser;
-            //        }
-            //    }
-            //
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //return null;
 
         }
         private UserModel JsonToUser(HttpResponseMessage response)
