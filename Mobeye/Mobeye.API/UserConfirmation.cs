@@ -9,10 +9,21 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
+        private string url;
+
+        public UserConfirmation()
+        {
+#if DEBUG
+            url = "https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/";
+#else 
+            url = "https://www.api.mymobeye.com/api";
+#endif
+        }
+
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
-            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("profile/?Authcode=" + code))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync(url + "profile/?Authcode=" + code))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -30,7 +41,7 @@ namespace Mobeye.API
             string contentString;
 
             //HttpContent regcon = new StringContent(JObject.FromObject(reg));
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei=" + imei + "&SmsKey=" + regCode).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.GetAsync(url + "users?Imei=" + imei + "&SmsKey=" + regCode).Result)
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -47,7 +58,7 @@ namespace Mobeye.API
         }
         public UserModel LoginUser(string privateKey, string imei)
         {
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("users?Imei=" + imei + "&PrivateKey=" + privateKey).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.GetAsync(url + "users?Imei=" + imei + "&PrivateKey=" + privateKey).Result)
             {
                 return JsonToUser(response);
             }
@@ -56,7 +67,7 @@ namespace Mobeye.API
         {
             HttpContent authcode = new StringContent("code");
 
-            using (HttpResponseMessage response = ApiHelper.Api.PostAsync("users?Privatekey=" + privatekey, authcode).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.PostAsync(url + "users?Privatekey=" + privatekey, authcode).Result)
             {
                 return response.IsSuccessStatusCode;
             }
@@ -64,7 +75,7 @@ namespace Mobeye.API
         public async Task<List<DeviceModel>> GetAuthorization(string imei, string privatekey)
         {
             List<DeviceModel> devices = new List<DeviceModel>();
-            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync($"users?Imei={imei}&PrivateKey={privatekey}"))
+            using (HttpResponseMessage response = await ApiHelper.Api.GetAsync(url + $"users?Imei={imei}&PrivateKey={privatekey}"))
             {
                 if (response.IsSuccessStatusCode)
                 {

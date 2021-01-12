@@ -21,10 +21,10 @@ namespace Mobeye
             OneSignal.Current.SetLogLevel(LOG_LEVEL.VERBOSE, LOG_LEVEL.NONE);
 
             OneSignal.Current.StartInit("4426fab6-1d56-4a81-8224-d62d61f0ceb6")
-            .Settings(new Dictionary<string, bool>() {
-            { IOSSettings.kOSSettingsKeyAutoPrompt, false },
-             { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
-            .InFocusDisplaying(OSInFocusDisplayOption.Notification)
+            //.Settings(new Dictionary<string, bool>() {
+            //{ IOSSettings.kOSSettingsKeyAutoPrompt, false },
+            // { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
+            //.InFocusDisplaying(OSInFocusDisplayOption.Notification)
             .EndInit();
 
             // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 7)
