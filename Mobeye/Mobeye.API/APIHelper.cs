@@ -12,11 +12,23 @@ namespace Mobeye.API
 
         public static void InitaliazeClient(string runtimePlatform)
         {
-            string url = "https://www.api.mymobeye.com/api";
-            HttpWebRequest request = HttpWebRequest.CreateHttp(url);
-            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            /* var EndPoint = "https://www.api.mymobeye.com/api";
+             var httpClientHandler = new HttpClientHandler();
+             httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+             {
+                 return true;
+             };
+             var httpClient = new HttpClient(httpClientHandler) { BaseAddress = new Uri(EndPoint) };*/
 
-            Api = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+
+            Api = new HttpClient(handler);
 #if DEBUG
             Api.BaseAddress = new Uri("https://www.api.mymobeye.com/api");
 #else 

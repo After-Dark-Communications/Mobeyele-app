@@ -12,6 +12,11 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
+      /*  public UserConfirmation() {
+          
+            ServicePointManager.ServerCertificateValidationCallback +=
+                (sender, cert, chain, sslPolicyErrors) => { return true; };
+        }*/
 
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
@@ -28,10 +33,7 @@ namespace Mobeye.API
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
         public string RegisterUser(string imei, string smsCode)
-        {
-            //Create an dynamic object to parse it to json. This is necessary for the HttpContent.
-            //TODO: fix json 
-            String contentString;
+        {                      
 
             var data = new
             {
@@ -45,33 +47,30 @@ namespace Mobeye.API
 
             Console.WriteLine(myContent);
 
-            //HttpResponseMessage response = ApiHelper.Api.PostAsync(url, byteContent).
             try
             {
-                var response = ApiHelper.Api.PostAsync("/registerphone", byteContent).Result;
+                var response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/registerphone", byteContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string resp = response.Content.ReadAsStringAsync().Result;
+                    string resp= response.Content.ReadAsStringAsync().Result;
 
-                    JArray contents = JArray.Parse(resp);
-                    if (contents.Count > 0)
-                    {
-                        contentString = (string)contents[0]["PrivateKey"];
-                        return contentString;
-                    }
+                    string[] partOne = resp.Split(':');
+                    string[] partTwo = partOne[1].Split('"');
+                    string privatekey = partTwo[1];
+
+                    return privatekey;                   
+
                 }
                 return response.StatusCode.ToString();
             }
             catch (Exception e)
+            
             {
 
             }
             return "nothing";
-
-
-
-
         }
+
         public UserModel LoginUser(string privateKey, string imei)
         {
             //   try{
