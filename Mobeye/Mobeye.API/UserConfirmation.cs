@@ -18,6 +18,8 @@ namespace Mobeye.API
                 (sender, cert, chain, sslPolicyErrors) => { return true; };
         }*/
 
+      
+
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
@@ -58,8 +60,8 @@ namespace Mobeye.API
                     string[] partTwo = partOne[1].Split('"');
                     string privatekey = partTwo[1];
 
-                    return privatekey;                   
-
+                    return privatekey;
+                
                 }
                 return response.StatusCode.ToString();
             }
@@ -69,14 +71,24 @@ namespace Mobeye.API
 
             }
             return "nothing";
+
         }
 
-        public UserModel LoginUser(string privateKey, string imei)
+        public UserModel LoginUser(string imei, string privateKey)
         {
-            //   try{
-            using (HttpResponseMessage response = ApiHelper.Api.GetAsync("/phoneauthorization" + "users?PhoneId=" + imei + "&PrivateKey=" + privateKey).Result)
+            var data = new
             {
-
+                PhoneId = imei,
+                privateKey = privateKey
+            };
+            var myContent = JsonConvert.SerializeObject(data);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //   try{
+            using (HttpResponseMessage response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/phoneauthorization",byteContent).Result)
+            {
+                Console.WriteLine(response);
                 return JsonToUser(response);
             }
             //    }
@@ -120,8 +132,9 @@ namespace Mobeye.API
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
                     JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                    UserModel res = new UserModel(obj["SmsKey"]?.ToString(), obj["Authcode"]?.ToString(), obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(), Convert.ToInt32(obj["Authlevel"]));
-                    return res;
+                                                          // UserModel res = new UserModel(obj["SmsKey"]?.ToString(), obj["Authcode"]?.ToString(), obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(), Convert.ToInt32(obj["Authlevel"]));
+                                                          // return res;
+                    return null;
                 }
                 else
                 {
@@ -152,18 +165,31 @@ namespace Mobeye.API
             if (response.IsSuccessStatusCode)
             {
                 string resp = response.Content.ReadAsStringAsync().Result;
-                JArray contents = JArray.Parse(resp);
+                return JsonConvert.DeserializeObject<UserModel>(resp);
+               
+
+                /*JArray contents = JArray.Parse(resp);
+
                 if (contents.Count > 0)//json always returns something if the request is valid, thus it can return an empty array
                 {
                     JObject content = JObject.FromObject(contents[0]);
+                    DeviceModel[] newArray = new DeviceModel[JArray.Parse(content["Devices"])];
+                    foreach (var device in content["Devices"])
+                    {
+                        DeviceModel newDevice = new DeviceModel(
+                            device["DeviceId"]?.ToString(),
+                            device["DeviceName"]?.ToString(),
+                            device["Command"]?.ToString(),
+                            device["CommmandText"]?.ToString());
+
+                        newArray[newArray.Length] = newDevice;                        
+                    }
+                    
 #if DEBUG
                     UserModel res = new UserModel(
-                        content["SmsKey"]?.ToString(),
+                        content["UserRole"]?.ToString(),
                         content["PrivateKey"]?.ToString(),
-                        content["Name"]?.ToString(),
-                        content["Imei"]?.ToString(),
-                        content["Phonenumber"].ToString(),
-                        Convert.ToInt32(content["PermissionLevel"]));
+                        content[""]?);
                     return res;
 #else
                     UserModel res = new UserModel(
@@ -175,7 +201,7 @@ namespace Mobeye.API
                         Convert.ToInt32(content["UserRole"]));
                     return res;
 #endif
-                }
+                }*/
             }
             return null;
         }

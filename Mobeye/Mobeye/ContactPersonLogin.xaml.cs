@@ -36,8 +36,8 @@ namespace Mobeye
            .ContinueWith(
                delegate
                {
-                   if (EnteredCode.Text.Length >= 5) { AttemptLogin(); } //perform regular login
-                   else if (EnteredCode.Text.Length >= 4) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
+                  // if (EnteredCode.Text.Length == 5) { AttemptLogin(); } //perform regular login
+                   if (EnteredCode.Text.Length >= 5 ) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
                    else { validateButton.IsVisible = false; }//hide login button
                },
                CancellationToken.None,
@@ -104,18 +104,20 @@ namespace Mobeye
                 res = user.LogInWithPrivateKey(code);
             }
             if (res != null)
+
+
             {
                 authLoad.IsRunning = false;
-                switch (res.PermissionLevel)
+                switch (res.UserRole)
                 {
-                    case 1:
+                    case "Account":
                         openTestSite();
                         break;
-                    case 2:
-                        DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
+                  /*  case "Standard":
+                       // DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
                         //TODO: add actual functionality.
-                        break;
-                    case 3:
+                        break;*/
+                    case "Standard":
                         GoToCallKeyPage(res);
                         break;
                     default:
@@ -127,6 +129,8 @@ namespace Mobeye
             {
                 DisplayAlert("Login failed", "We were unable to log you in, please try again later or contact the one who provided the code", "OK");
             }
+
+            
         }
 
     }
