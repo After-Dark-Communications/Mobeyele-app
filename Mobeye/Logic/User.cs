@@ -9,6 +9,7 @@ namespace Mobeye.Logic
     {
         private UserConfirmation _user;
         private readonly IDevice _device;
+        private string smscode;
         public User()
         {
             _user = new UserConfirmation();
@@ -33,6 +34,7 @@ namespace Mobeye.Logic
         }
         public string Register(string smsCode)
         {
+            smscode = smsCode;
             string privateKey = "";
             if (_device != null)
             {
@@ -46,7 +48,7 @@ namespace Mobeye.Logic
             //API returns UserModel or null
             //return UserModel
             _user = _user==null ? new UserConfirmation() : _user;
-            UserModel user = _user.LoginUser(privateKey, _device.GetIdentifier());
+            UserModel user = _user.LoginUser( _device.GetIdentifier(), privateKey);
 
             if (user != null)
             {
@@ -57,12 +59,9 @@ namespace Mobeye.Logic
         public UserModel createMinimalUm(string smsKey, string privateKey)
         {
             UserModel user = new UserModel();
-            user.SmsKey = smsKey;
+           
             user.PrivateKey = privateKey;
-            user.Imei = _device.GetIdentifier();
-            user.Name = "";
-            user.Phonenumber = "";
-            user.PermissionLevel = 999;
+            
             return user;
         }
         public List<DeviceModel> GetAuthorization(string privateKey, string imei)
