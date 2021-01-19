@@ -12,7 +12,15 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
-  
+#if DEBUG
+         private readonly string Url = "https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/";
+#else 
+         private readonly string Url = "https://www.api.mymobeye.com/api";
+#endif
+        public UserConfirmation()
+        {
+
+        }
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
@@ -28,7 +36,7 @@ namespace Mobeye.API
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
         public string RegisterUser(string imei, string smsCode)
-        {                      
+        {
 
             var data = new
             {
@@ -44,22 +52,22 @@ namespace Mobeye.API
 
             try
             {
-                var response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/registerphone", byteContent).Result;
+                var response = ApiHelper.Api.PostAsync($"{Url}/registerphone", byteContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string resp= response.Content.ReadAsStringAsync().Result;
+                    string resp = response.Content.ReadAsStringAsync().Result;
 
                     string[] partOne = resp.Split(':');
                     string[] partTwo = partOne[1].Split('"');
                     string privatekey = partTwo[1];
 
                     return privatekey;
-                
+
                 }
                 return null;
             }
             catch (Exception e)
-            
+
             {
 
             }
@@ -79,7 +87,7 @@ namespace Mobeye.API
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //   try{
-            using (HttpResponseMessage response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/phoneauthorization",byteContent).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.PostAsync($"{Url}/phoneauthorization", byteContent).Result)
             {
                 Console.WriteLine(response);
                 return JsonToUser(response);
@@ -92,7 +100,7 @@ namespace Mobeye.API
             //    }
 
         }
-        public bool CreateAuthorizationCode(string code, string privatekey)
+        /*public bool CreateAuthorizationCode(string code, string privatekey)
         {
             HttpContent authcode = new StringContent("code");
 
@@ -101,7 +109,8 @@ namespace Mobeye.API
                 return response.IsSuccessStatusCode;
             }
         }
-        public async Task<List<DeviceModel>> GetAuthorization(string imei, string privatekey)
+
+       public async Task<List<DeviceModel>> GetAuthorization(string imei, string privatekey)
         {
             List<DeviceModel> devices = new List<DeviceModel>();
             using (HttpResponseMessage response = await ApiHelper.Api.GetAsync($"users?Imei={imei}&PrivateKey={privatekey}"))
@@ -114,6 +123,7 @@ namespace Mobeye.API
                 return devices;
             }
         }
+
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
             //TODO: fix deadlock
@@ -152,49 +162,13 @@ namespace Mobeye.API
             //}
             //return null;
 
-        }
+        }*/
         private UserModel JsonToUser(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
             {
                 string resp = response.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<UserModel>(resp);
-               
-
-                /*JArray contents = JArray.Parse(resp);
-
-                if (contents.Count > 0)//json always returns something if the request is valid, thus it can return an empty array
-                {
-                    JObject content = JObject.FromObject(contents[0]);
-                    DeviceModel[] newArray = new DeviceModel[JArray.Parse(content["Devices"])];
-                    foreach (var device in content["Devices"])
-                    {
-                        DeviceModel newDevice = new DeviceModel(
-                            device["DeviceId"]?.ToString(),
-                            device["DeviceName"]?.ToString(),
-                            device["Command"]?.ToString(),
-                            device["CommmandText"]?.ToString());
-
-                        newArray[newArray.Length] = newDevice;                        
-                    }
-                    
-#if DEBUG
-                    UserModel res = new UserModel(
-                        content["UserRole"]?.ToString(),
-                        content["PrivateKey"]?.ToString(),
-                        content[""]?);
-                    return res;
-#else
-                    UserModel res = new UserModel(
-                        content["Code"]?.ToString(),
-                        content["privateKey"]?.ToString(),
-                        content["Name"]?.ToString(),
-                        content["phoneId"]?.ToString(),
-                        content["Phonenumber"].ToString(),
-                        Convert.ToInt32(content["UserRole"]));
-                    return res;
-#endif
-                }*/
             }
             return null;
         }

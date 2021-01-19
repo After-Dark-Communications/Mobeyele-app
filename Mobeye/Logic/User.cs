@@ -65,7 +65,7 @@ namespace Mobeye.Logic
             
             return user;
         }
-        public List<DeviceModel> GetAuthorization(string privateKey, string imei)
+        /*public List<DeviceModel> GetAuthorization(string privateKey, string imei)
         {
             List<DeviceModel> devices = _user.GetAuthorization(privateKey, imei).Result;
             if (devices != null)
@@ -73,13 +73,13 @@ namespace Mobeye.Logic
                 return devices;
             }
             return null;
-        }
+        }*/
 
 
         public void CreateAuthorizationCode(string code, string privateKey)
         {
             //pass on the code to api
-            _user.CreateAuthorizationCode(code, privateKey);
+            //_user.CreateAuthorizationCode(code, privateKey);
         }
 
 

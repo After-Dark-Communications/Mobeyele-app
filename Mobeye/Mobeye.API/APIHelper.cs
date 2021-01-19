@@ -29,11 +29,6 @@ namespace Mobeye.API
                 };
 
             Api = new HttpClient(handler);
-#if DEBUG
-            Api.BaseAddress = new Uri("https://www.api.mymobeye.com/api");
-#else 
-            Api.BaseAddress = new Uri("https://www.api.mymobeye.com/api");
-#endif
             Api.DefaultRequestHeaders.Accept.Clear();
             Api.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
