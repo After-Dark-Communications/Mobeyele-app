@@ -77,7 +77,7 @@ namespace Mobeye
 #if DEBUG
                 using (HttpResponseMessage response = ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts").Result)
 #else
-                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
+                using (HttpResponseMessage response = ApiHelper.Api.GetAsync("https://mymobeye.eu/").Result)//TODO: make test call to mobeye api
 #endif
                 {
                     if (response.IsSuccessStatusCode)
@@ -85,9 +85,8 @@ namespace Mobeye
                         return true;
                        
                     }
-                
-                    //return error message
                 }
+                DisplayAlert("No Connection", "Unable to connect to the API, please check your connection and try again. If this problem persists, please contact mobeye.", "OK");
                 webload.IsRunning = false;
                 return false;
             }
