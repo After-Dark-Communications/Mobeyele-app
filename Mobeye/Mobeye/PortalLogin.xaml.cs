@@ -30,7 +30,8 @@ namespace Mobeye
 
         internal void LoginWithPortalAccount(object sender, EventArgs e)
         {
-            //TODO: redundant
+           //redundant
+
            /* loginLoad.IsRunning = true;
             setUsernameAndPassword(Username.Text, Password.Text);
             User user = new User();

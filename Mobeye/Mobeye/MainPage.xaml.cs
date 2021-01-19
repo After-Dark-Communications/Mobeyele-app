@@ -24,8 +24,6 @@ namespace Mobeye
 
         protected override void OnAppearing()
         {
-            //TODO: check if user has internet connection. If so, check if user can connect with mobeye or whomever is the api provider
-
             if (TryInternet())
             {
                 Navigation.PushAsync(new ContactPersonLogin());
@@ -75,7 +73,7 @@ namespace Mobeye
 #if DEBUG
                 using (HttpResponseMessage response = ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts").Result)
 #else
-                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
+                using (HttpResponseMessage response = ApiHelper.Api.GetAsync("https://mymobeye.eu/".Result))//TODO: make test call to mobeye api
 #endif
                 {
                     if (response.IsSuccessStatusCode)
@@ -83,10 +81,9 @@ namespace Mobeye
                         return true;
                        
                     }
-                
-                    //return error message
                 }
                 webload.IsRunning = false;
+                DisplayAlert("No Connection", "Unable to connect to the api, please check your internet connection and try again. if this issue persists, please contact the mobeye company", "OK");
                 return false;
             }
             else

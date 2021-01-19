@@ -12,7 +12,7 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
-  
+
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
@@ -28,7 +28,7 @@ namespace Mobeye.API
         }
         //The call is made to the following url: https://www.api.mymobeye.com/api/auth. The url is based on the base URL provided in the APIHelper
         public string RegisterUser(string imei, string smsCode)
-        {                      
+        {
 
             var data = new
             {
@@ -40,26 +40,26 @@ namespace Mobeye.API
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            Console.WriteLine(myContent);
-
             try
             {
                 var response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/registerphone", byteContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string resp= response.Content.ReadAsStringAsync().Result;
+                    string resp = response.Content.ReadAsStringAsync().Result;
 
                     string[] partOne = resp.Split(':');
                     string[] partTwo = partOne[1].Split('"');
                     string privatekey = partTwo[1];
 
+
                     return privatekey;
-                
+
                 }
-                return response.StatusCode.ToString();
+                //return response.StatusCode.ToString();
+                return null;
             }
             catch (Exception e)
-            
+
             {
 
             }
@@ -79,7 +79,7 @@ namespace Mobeye.API
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //   try{
-            using (HttpResponseMessage response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/phoneauthorization",byteContent).Result)
+            using (HttpResponseMessage response = ApiHelper.Api.PostAsync("https://www.api.mymobeye.com/api/phoneauthorization", byteContent).Result)
             {
                 Console.WriteLine(response);
                 return JsonToUser(response);
@@ -116,17 +116,16 @@ namespace Mobeye.API
         }
         public async Task<UserModel> PortalOwnerConfirmationRequest(UserModel user)
         {
-            //TODO: fix deadlock
-            //TODO: catch exception, if unable to connect to server/ no internet connection
             using (HttpResponseMessage response = await ApiHelper.Api.GetAsync(""))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     Task<string> resp = response.Content.ReadAsStringAsync();
                     string contents = resp.Result;
-                    JObject obj = JObject.Parse(contents);//newtonsoft json parsing
-                                                          // UserModel res = new UserModel(obj["SmsKey"]?.ToString(), obj["Authcode"]?.ToString(), obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(), Convert.ToInt32(obj["Authlevel"]));
-                                                          // return res;
+                    JObject obj = JObject.Parse(contents);
+                    //newtonsoft json parsing
+                    // UserModel res = new UserModel(obj["SmsKey"]?.ToString(), obj["Authcode"]?.ToString(), obj["name"]?.ToString(), obj["Imei"]?.ToString(), obj["Phonenumber"]?.ToString(), Convert.ToInt32(obj["Authlevel"]));
+                    // return res;
                     return null;
                 }
                 else
@@ -159,7 +158,7 @@ namespace Mobeye.API
             {
                 string resp = response.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<UserModel>(resp);
-               
+
 
                 /*JArray contents = JArray.Parse(resp);
 

@@ -22,7 +22,7 @@ namespace Mobeye
         public CallKeyPage(UserModel usermodel)
         {
             InitializeComponent();
-            this.usermodel = (usermodel == null) ? new UserModel(): usermodel;
+            this.usermodel = (usermodel == null) ? new UserModel() : usermodel;
             this.BindingContext = GetAccessableDoors();
             RefreshDoors();
         }
@@ -34,10 +34,9 @@ namespace Mobeye
 
         public void RefreshDoors()
         {
-
             //TODO: call api to check for new doors
             List<string> Doors = GetAccessableDoors();
-            if(Doors.Count > 0)
+            if (Doors.Count > 0)
             {
                 NoDevicesLabel.IsVisible = false;
                 DoorContainer.Children.Clear();
@@ -45,14 +44,12 @@ namespace Mobeye
                 {
                     DoorContainer.Children.Add(CreateNewDoorItem(Doors[i]));
                 }
-
             }
             else
             {
-                NoDevicesLabel.IsVisible = true; 
-
+                NoDevicesLabel.IsVisible = true;
             }
-           
+
         }
 
         private async Task OpenDoor(string Doorname, Button button)
@@ -93,7 +90,7 @@ namespace Mobeye
             button.IsEnabled = true;
         }
 
-        private Frame CreateNewDoorItem(string name)
+        private Frame CreateNewDoorItem(string name, string identifier = "")
         {
             Frame frame = new Frame()
             {
@@ -115,7 +112,7 @@ namespace Mobeye
                 Margin = new Thickness(60, 0, 0, 0),
                 FontSize = 18,
                 TextColor = Color.FromHex("#000000"),
-                Text = name,
+                Text = string.IsNullOrEmpty(identifier) ? name : name + "(" + identifier + ")",
             };
             Button button = new Button
             {
@@ -139,13 +136,13 @@ namespace Mobeye
             }
 
             return temp;
-                
-           /* List<string> temp = new List<string>();
-            for (int i = 1; i < 14; i++)
-            {
-                temp.Add("Door" + i);
-            }
-            return temp;*/
+
+            /* List<string> temp = new List<string>();
+             for (int i = 1; i < 14; i++)
+             {
+                 temp.Add("Door" + i);
+             }
+             return temp;*/
         }
 
     }
