@@ -56,7 +56,7 @@ namespace Mobeye.API
                     return privatekey;
                 
                 }
-                return response.StatusCode.ToString();
+                return null;
             }
             catch (Exception e)
             
