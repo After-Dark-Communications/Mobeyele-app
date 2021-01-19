@@ -25,7 +25,11 @@ namespace Mobeye
         protected override void OnAppearing()
         {
             //TODO: check if user has internet connection. If so, check if user can connect with mobeye or whomever is the api provider
-            TryInternet();
+
+            if (TryInternet())
+            {
+                Navigation.PushAsync(new ContactPersonLogin());
+            }
             base.OnAppearing();
         }
 
@@ -62,31 +66,35 @@ namespace Mobeye
             TryInternet();
         }
 
-        private async void TryInternet()
+        private bool TryInternet()
         {
             webload.IsRunning = true;
             NetworkAccess netStatus = Connectivity.NetworkAccess;
             if (netStatus == NetworkAccess.Internet)
             {
 #if DEBUG
-                using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts"))
+                using (HttpResponseMessage response = ApiHelper.Api.GetAsync("https://my-json-server.typicode.com/Irishmun/mobeyeletestdb/posts").Result)
 #else
                 using (HttpResponseMessage response = await ApiHelper.Api.GetAsync("https://www.google.nl/"))//TODO: make test call to mobeye api
 #endif
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        await Navigation.PushAsync(new ContactPersonLogin());
+                        return true;
+                       
                     }
+                
                     //return error message
                 }
                 webload.IsRunning = false;
+                return false;
             }
             else
             {
-                await DisplayAlert("No Internet", "Unable to connect to the internet, please check your connection and try again.", "OK");
+                DisplayAlert("No Internet", "Unable to connect to the internet, please check your connection and try again.", "OK");
                 webload.IsRunning = false;
                 retryButton.IsVisible = true;
+                return false;
             }
         }
     }

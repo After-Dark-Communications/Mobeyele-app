@@ -2,6 +2,6 @@
 {
     public interface IDevice
     {
-        string GetIdentifier();
+        string GetIdentifier(string smscode);
     }
 }

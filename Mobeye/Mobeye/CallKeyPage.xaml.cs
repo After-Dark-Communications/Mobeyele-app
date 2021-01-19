@@ -34,13 +34,25 @@ namespace Mobeye
 
         public void RefreshDoors()
         {
+
             //TODO: call api to check for new doors
             List<string> Doors = GetAccessableDoors();
-            DoorContainer.Children.Clear();
-            for (int i = 0; i < Doors.Count; i++)
+            if(Doors.Count > 0)
             {
-                DoorContainer.Children.Add(CreateNewDoorItem(Doors[i]));
+                NoDevicesLabel.IsVisible = false;
+                DoorContainer.Children.Clear();
+                for (int i = 0; i < Doors.Count; i++)
+                {
+                    DoorContainer.Children.Add(CreateNewDoorItem(Doors[i]));
+                }
+
             }
+            else
+            {
+                NoDevicesLabel.IsVisible = true; 
+
+            }
+           
         }
 
         private async Task OpenDoor(string Doorname, Button button)
@@ -121,11 +133,19 @@ namespace Mobeye
         private List<string> GetAccessableDoors()
         {
             List<string> temp = new List<string>();
+            foreach (var device in this.usermodel.Devices)
+            {
+                temp.Add(device.Devicename);
+            }
+
+            return temp;
+                
+           /* List<string> temp = new List<string>();
             for (int i = 1; i < 14; i++)
             {
                 temp.Add("Door" + i);
             }
-            return temp;
+            return temp;*/
         }
 
     }

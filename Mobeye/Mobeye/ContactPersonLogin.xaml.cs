@@ -25,6 +25,11 @@ namespace Mobeye
             await Navigation.PushAsync(new CallKeyPage(model));
         }
 
+        async void GoToHomePage(UserModel model)
+        {
+            await Navigation.PushAsync(new Page1(model));
+        }
+
         async void GoToPrivateKeyPage(string privateKey)
         {
             await Navigation.PushAsync(new PrivateKeyPage(privateKey));
@@ -35,9 +40,8 @@ namespace Mobeye
             Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token) // if no keystroke occurs, carry on after 500ms
            .ContinueWith(
                delegate
-               {
-                  // if (EnteredCode.Text.Length == 5) { AttemptLogin(); } //perform regular login
-                   if (EnteredCode.Text.Length >= 5 ) { validateButton.IsVisible = true; }//if 4 digits have been entered, show login button
+               {                   
+                   if (EnteredCode.Text.Length >= 4) { validateButton.IsVisible = true; }
                    else { validateButton.IsVisible = false; }//hide login button
                },
                CancellationToken.None,
@@ -49,20 +53,13 @@ namespace Mobeye
         {
             AttemptLogin();
         }
-
-        /*   private void AttemptLogin()
-           {
-               authLoad.IsRunning = true;
-               User user = new User(Device.RuntimePlatform);
-               user.Register(EnteredCode.Text);
-
-           }*/
-
+        
         private void AttemptLogin()
         {
             authLoad.IsRunning = true;
             User user = new User(Device.RuntimePlatform);
-            UserModel res = user.LogInWithPrivateKey(EnteredCode.Text);
+            string privateKey = user.Register(EnteredCode.Text);
+            UserModel res = user.LogInWithPrivateKey(privateKey);
             if (res != null)
             {
                 BringUserToAuthorizedSection(EnteredCode.Text, user, res);
@@ -81,11 +78,6 @@ namespace Mobeye
                     EnteredCode.Text = "";
                 }
             }
-        }
-
-        private Task openTestSite()
-        {
-            return Browser.OpenAsync("https://www.technetgroup.nl", BrowserLaunchMode.External);
         }
 
         private bool successfullRegister(User user)
@@ -111,12 +103,8 @@ namespace Mobeye
                 switch (res.UserRole)
                 {
                     case "Account":
-                        openTestSite();
+                        GoToHomePage(res);
                         break;
-                  /*  case "Standard":
-                       // DisplayAlert("Contact Person", "You are now logged in as a contact person. You are now able to receive messages from any devices assigned to you via this app.", "OK");
-                        //TODO: add actual functionality.
-                        break;*/
                     case "Standard":
                         GoToCallKeyPage(res);
                         break;

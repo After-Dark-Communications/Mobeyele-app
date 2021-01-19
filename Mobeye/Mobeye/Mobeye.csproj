@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="RedirectPage.xaml.cs">
+      <DependentUpon>RedirectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="PortalLogin.xaml.cs">
       <DependentUpon>PortalLogin.xaml</DependentUpon>
     </Compile>
@@ -31,6 +34,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ContactPersonLogin.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="RedirectPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="PortalLogin.xaml">

@@ -12,14 +12,7 @@ namespace Mobeye.API
 {
     public class UserConfirmation
     {
-      /*  public UserConfirmation() {
-          
-            ServicePointManager.ServerCertificateValidationCallback +=
-                (sender, cert, chain, sslPolicyErrors) => { return true; };
-        }*/
-
-      
-
+  
         public async Task<UserModel> GetCodeConfirmRequest(string code)
         {
             UserModel user = new UserModel();
